@@ -1,0 +1,30 @@
+font.size=64
+font.bold=false
+font.italic=false
+
+pad.top=10
+pad.right=10
+pad.bottom=10
+pad.left=10
+pad.advance.x=0
+pad.advance.y=0
+
+glyph.page.width=1024
+glyph.page.height=512
+
+effect.class=org.newdawn.slick.font.effects.ShadowEffect
+effect.Color=000000
+effect.Opacity=0.7
+effect.X distance=0.1
+effect.Y distance=0.1
+effect.Blur kernel size=15
+effect.Blur passes=6
+
+effect.class=org.newdawn.slick.font.effects.OutlineEffect
+effect.Color=ffffff
+effect.Width=10.0
+effect.Join=2
+
+effect.class=org.newdawn.slick.font.effects.ColorEffect
+effect.Color=000000
+
