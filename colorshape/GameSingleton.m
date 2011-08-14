@@ -32,7 +32,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GameSingleton);
 			hasGameCenter = NO;
 		
 		// Trigger the intro animation to be shown once
-		showIntroAnimation = NO;
+		showIntroAnimation = YES;
 		
 		isRetina = NO;
 	}

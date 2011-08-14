@@ -119,13 +119,15 @@
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
 	// Register default high scores - this could be more easily done by loading a .plist instead of manually creating this nested object
-	NSDictionary *defaultDefaults = [NSDictionary dictionaryWithObject:[NSArray arrayWithObjects:[NSNumber numberWithInt:0],
+	NSDictionary *defaultDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
+									 [NSArray arrayWithObjects:[NSNumber numberWithInt:0],
 																		[NSNumber numberWithInt:0],
 																		[NSNumber numberWithInt:0],
 																		[NSNumber numberWithInt:0],
 																		[NSNumber numberWithInt:0],
-																		nil]
-																forKey:@"scores"];
+																		nil], @"scores",
+									[NSNumber numberWithBool:YES], @"showInstructions", nil];
+	
 	[defaults registerDefaults:defaultDefaults];
 	[defaults synchronize];
 	
@@ -138,7 +140,7 @@
 	[[SimpleAudioEngine sharedEngine] preloadBackgroundMusic:@"1.mp3"];
 	
 	// Turn down the BGM volume a bit
-	[[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.5];
+	[[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.35];
 	
 	// Run the intro Scene
 	[[CCDirector sharedDirector] runWithScene: [TitleScene scene]];

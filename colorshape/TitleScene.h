@@ -18,8 +18,9 @@
 	// "Container" nodes used to move certain UI elements around
 	CCNode *titleNode;
 	CCNode *scoresNode;
+	CCNode *infoNode;
 	
-	// Button that shows Game Center leaderboards; hidden if no Game Center auth
+	// Button that shows Game Center leaderboards; disabled if no Game Center auth
 	CCMenuItemImage *leaderboardsButton;
 	
 	// String to be appended to sprite filenames if required to use a high-rez file (e.g. iPhone 4 assests on iPad)

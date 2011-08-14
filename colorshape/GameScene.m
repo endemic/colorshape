@@ -161,20 +161,6 @@
 	// Increment the total time played this game
 	timePlayed += dt;
 	
-	// Increase the level every 60 seconds
-	if (timePlayed >= 60.0)
-	{
-		level++;
-		[levelLabel setString:[NSString stringWithFormat:@"%02d", level]];
-		
-		// Change game background!
-		[bg setTexture:[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"background-%i%@.png", level % 10, hdSuffix]]];
-		[gridBg setTexture:[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"grid-background-%i%@.png", level % 10, hdSuffix]]];
-		
-		// Reset the timePlayed counter back to zero
-		timePlayed = 0;
-	}
-	
 	// Game over condition
 	if (timeRemaining < 0)
 	{
@@ -1160,8 +1146,7 @@
 - (void)createStatusMessageAt:(CGPoint)position withText:(NSString *)text
 {
 	// Create a label and add it to the layer
-	int defaultFontSize = 16;
-	CCLabelBMFont *label = [CCLabelBMFont labelWithString:text fntFile:[NSString stringWithFormat:@"chalkduster-%i.fnt", defaultFontSize * fontMultiplier]];
+	CCLabelBMFont *label = [CCLabelBMFont labelWithString:text fntFile:[NSString stringWithFormat:@"chalkduster-16%@.fnt", hdSuffix]];
 	label.position = position;
 	[self addChild:label z:10];		// Should be z-positioned on top of everything
 	
@@ -1199,7 +1184,7 @@
 	if ([GameSingleton sharedGameSingleton].gameMode == kGameModeNormal)
 	{
 		// Calculate how much extra time the player gets
-		float additionalTime = (1.0 / level) * combo;
+		float additionalTime = (0.5 / level) * combo;
 		timeRemaining += additionalTime;
 		
 		CGPoint location;
@@ -1212,8 +1197,8 @@
 			location = ccp(50, 380);
 		}
 		
-		// Create a "+1s" status message
-		[self createStatusMessageAt:location withText:[NSString stringWithFormat:@"+%0.1fs", additionalTime]];
+		// Create a "+1" status message
+		[self createStatusMessageAt:location withText:[NSString stringWithFormat:@"+%0.1f", additionalTime]];
 		
 		// Enforce max time limit
 		if (timeRemaining > kMaxTimeLimit)
@@ -1228,6 +1213,16 @@
 {
 	score += points;
 	[scoreLabel setString:[NSString stringWithFormat:@"%08d", score]];
+	
+	if (floor(score / 1500) >= level)
+	{
+		level++;
+		[levelLabel setString:[NSString stringWithFormat:@"%02d", level]];
+		
+		// Change game background!
+		[bg setTexture:[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"background-%i%@.png", level % 10, hdSuffix]]];
+		[gridBg setTexture:[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"grid-background-%i%@.png", level % 10, hdSuffix]]];
+	}
 }
 
 - (void)comboCountdown

@@ -162,7 +162,7 @@
 		NSArray *highScores = [defaults arrayForKey:@"scores"];
 		
 		// Create title label
-		CCSprite *title = [CCSprite spriteWithFile:[NSString stringWithFormat:@"high-scores%@.png", hdSuffix]];
+		CCSprite *title = [CCSprite spriteWithFile:[NSString stringWithFormat:@"high-scores-headline%@.png", hdSuffix]];
 		title.position = ccp(windowSize.width / 2, windowSize.height - title.contentSize.height / 2);
 		[scoresNode addChild:title];
 		
@@ -175,9 +175,16 @@
 			CCLabelBMFont *label = [CCLabelBMFont labelWithString:[NSString stringWithFormat:@"%i.%i\n", i + 1, [[highScores objectAtIndex:i] intValue]] 
 														  fntFile:[NSString stringWithFormat:@"chalkduster-%i.fnt", defaultFontSize * fontMultiplier]];
 			label.anchorPoint = ccp(0, 0.5); 
-			label.position = ccp(windowSize.width / 2 - windowSize.width / 3, title.position.y - label.contentSize.height * (i + 2));
+			label.position = ccp(windowSize.width / 2 - windowSize.width / 3, (title.position.y + label.contentSize.height / 2) - label.contentSize.height * (i + 2));
 			[scoresNode addChild:label z:2];
 		}
+		
+		leaderboardsButton = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"leaderboards-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"leaderboards-button-selected%@.png", hdSuffix] disabledImage:[NSString stringWithFormat:@"leaderboards-button-disabled%@.png", hdSuffix] block:^(id sender) {
+			[[SimpleAudioEngine sharedEngine] playEffect:@"button.caf"];
+			
+			// Show the leaderboard for the "normal" category
+			[[GameSingleton sharedGameSingleton] showLeaderboardForCategory:@"com.ganbarugames.colorshape.normal"];
+		}];
 		
 		// Create button that will take us back to the title screen
 		CCMenuItemFont *backButton = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"back-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"back-button-selected%@.png", hdSuffix] block:^(id sender) {
@@ -189,13 +196,49 @@
 		}];
 		
 		// Create menu that contains our buttons
-		CCMenu *menu = [CCMenu menuWithItems:backButton, nil];
+		CCMenu *menu = [CCMenu menuWithItems:leaderboardsButton, backButton, nil];
+		[menu alignItemsVerticallyWithPadding:5 * fontMultiplier];
 		
 		// Set position of menu to be below the scores
-		[menu setPosition:ccp(windowSize.width / 2, backButton.contentSize.height)];
+		[menu setPosition:ccp(windowSize.width / 2, backButton.contentSize.height / 0.75)];
 		
 		// Add menu to layer
 		[scoresNode addChild:menu z:2];
+		
+		/**
+		 * Create "info" node that shows credits and other options
+		 * 1. Designed and programmed by Nathan Demick
+		 * 2. Show instructions next game start
+		 * 3. Erase local high scores
+		 */
+		
+		infoNode = [CCNode node];
+		infoNode.contentSize = windowSize;
+		infoNode.position = ccp(0, windowSize.height);
+		[self addChild:infoNode z:3];
+		
+		// Create title label
+		CCSprite *infoTitle = [CCSprite spriteWithFile:[NSString stringWithFormat:@"info-headline%@.png", hdSuffix]];
+		infoTitle.position = ccp(windowSize.width / 2, windowSize.height - infoTitle.contentSize.height / 2);
+		[infoNode addChild:infoTitle];
+		
+		// Create button that will take us back to the title screen
+		CCMenuItemFont *backButtonInfo = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"back-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"back-button-selected%@.png", hdSuffix] block:^(id sender) {
+			[[SimpleAudioEngine sharedEngine] playEffect:@"button.caf"];
+			
+			// Ease the default logo node down into view, replacing the scores node
+			[infoNode runAction:[CCEaseBackInOut actionWithAction:[CCMoveTo actionWithDuration:1.0 position:ccp(0, windowSize.height)]]];
+			[titleNode runAction:[CCEaseBackInOut actionWithAction:[CCMoveTo actionWithDuration:1.0 position:ccp(0, 0)]]];
+		}];
+		
+		// Create menu that contains our buttons
+		CCMenu *menuInfo = [CCMenu menuWithItems:backButtonInfo, nil];
+		
+		// Set position of menu to be at bottom of screen
+		[menuInfo setPosition:ccp(windowSize.width / 2, backButtonInfo.contentSize.height / 1.5)];
+		
+		// Add menu to layer
+		[infoNode addChild:menuInfo z:2];
 		
 	}	// End if ((self = [super init]))
 	
@@ -296,21 +339,26 @@
 		[titleNode runAction:[CCEaseBackInOut actionWithAction:[CCMoveTo actionWithDuration:1.0 position:ccp(0, windowSize.height)]]];
 	}];
 	
-	leaderboardsButton = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"leaderboards-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"leaderboards-button-selected%@.png", hdSuffix] disabledImage:[NSString stringWithFormat:@"leaderboards-button-disabled%@.png", hdSuffix] block:^(id sender) {
+	CCMenuItemImage *infoButton = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"info-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"info-button-selected%@.png", hdSuffix] block:^(id sender) {
 		[[SimpleAudioEngine sharedEngine] playEffect:@"button.caf"];
-		
-		// Show the leaderboard for the "normal" category
-		[[GameSingleton sharedGameSingleton] showLeaderboardForCategory:@"com.ganbarugames.colorshape.normal"];
+
+		// Ease the info node down into view, replacing the default logo, etc.
+		[infoNode runAction:[CCEaseBackInOut actionWithAction:[CCMoveTo actionWithDuration:1.0 position:ccp(0, 0)]]];
+		[titleNode runAction:[CCEaseBackInOut actionWithAction:[CCMoveTo actionWithDuration:1.0 position:ccp(0, -windowSize.height)]]];
 	}];
 	
-	CCMenu *titleMenu = [CCMenu menuWithItems:startButton, scoresButton, leaderboardsButton, nil];
+	// Add "start/scores" menu
+	CCMenu *titleMenu = [CCMenu menuWithItems:startButton, scoresButton, nil];
 	[titleMenu alignItemsVerticallyWithPadding:5 * fontMultiplier];
-	[titleMenu setPosition:ccp(windowSize.width / 2, logo.position.y - titleMenu.contentSize.height / 2.5)];
+	[titleMenu setPosition:ccp(windowSize.width / 2, startButton.contentSize.height / 0.65)];
 	[titleNode addChild:titleMenu z:3];
 	
-	//int defaultFontSize = 16;
-	//CCLabelBMFont *copyright = [CCLabelBMFont labelWithString:@"(c) 2011 Ganbaru Games" 
-	//												  fntFile:[NSString stringWithFormat:@"chalkduster-%i.fnt", defaultFontSize * fontMultiplier]];
+	// Add the "info" menu
+	CCMenu *infoMenu = [CCMenu menuWithItems:infoButton, nil];
+	infoMenu.position = ccp(windowSize.width - infoButton.contentSize.width / 1.5, infoButton.contentSize.height / 2.5);	// Position in lower right corner
+	[titleNode addChild:infoMenu z:3];
+	
+	// Add copyright info
 	CCSprite *copyright = [CCSprite spriteWithFile:[NSString stringWithFormat:@"copyright%@.png", hdSuffix]];
 	copyright.position = ccp(windowSize.width / 2, copyright.contentSize.height * 0.75);
 	[titleNode addChild:copyright];
@@ -324,7 +372,7 @@
 	// Show Game Center authentication
 	[[GameSingleton sharedGameSingleton] authenticateLocalPlayer];
 	
-	// Hide the "leaderboards" button if no Game Center
+	// Disable the "leaderboards" button if no Game Center
 	if (![GameSingleton sharedGameSingleton].hasGameCenter)
 	{
 		[leaderboardsButton setIsEnabled:NO];
@@ -383,7 +431,7 @@
 	// Reset SFX volume back to normals
 	[[SimpleAudioEngine sharedEngine] setEffectsVolume:1.0];
 	
-	[[SimpleAudioEngine sharedEngine] playEffect:@"explode.caf"];
+	//[[SimpleAudioEngine sharedEngine] playEffect:@"explode.caf"];
 }
 
 - (void)removeNodeFromParent:(CCNode *)node
