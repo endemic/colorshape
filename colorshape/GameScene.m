@@ -143,15 +143,22 @@
 		// Reset the "buffer" blocks hidden around the outside of the screen
 		[self resetBuffer];
 		
-		// Preload the particle image
+		// Preload particle image
 		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"particle%@.png", hdSuffix]];
+		
+		// Preload background images
+		for (int i = 0; i < 10; i++)
+		{
+			[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"background-%i%@.png", i, hdSuffix]];
+			[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"grid-background-%i%@.png", i, hdSuffix]];
+		}
 		
 		// Schedule an update method
 		[self scheduleUpdate];
 		
 		// Play random music track
 		int trackNumber = (float)(arc4random() % 100) / 100 * 3 + 1;	// 1 - 3
-		[[SimpleAudioEngine sharedEngine] playBackgroundMusic:[NSString stringWithFormat:@"%i.mp3", trackNumber]];
+		[[SimpleAudioEngine sharedEngine] playBackgroundMusic:[NSString stringWithFormat:@"%i.caf", trackNumber]];
 	}
 	return self;
 }
@@ -221,9 +228,7 @@
 	if ([GameSingleton sharedGameSingleton].gameMode == kGameModeNormal)
 	{
 		[[GameSingleton sharedGameSingleton] reportScore:score forCategory:@"com.ganbarugames.colorshape.normal"];
-	} else if ([GameSingleton sharedGameSingleton].gameMode == kGameModeTimeAttack)
-	{
-		[[GameSingleton sharedGameSingleton] reportScore:score forCategory:@"com.ganbarugames.colorshape.timeattack"];
+		NSLog(@"Trying to report a high score!");
 	}
 	
 	// Get scores array stored in user defaults

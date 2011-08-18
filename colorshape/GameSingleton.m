@@ -32,7 +32,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GameSingleton);
 			hasGameCenter = NO;
 		
 		// Trigger the intro animation to be shown once
-		showIntroAnimation = YES;
+		showIntroAnimation = NO;
 		
 		isRetina = NO;
 	}
@@ -113,7 +113,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GameSingleton);
 				// Handle reporting error here by adding object to a serializable array, to be sent again later
 				[unsentScores addObject:scoreReporter];
 				
-				//NSLog(@"Error sending score!");
+				NSLog(@"Error sending score!");
 			}
 		}];
 	}

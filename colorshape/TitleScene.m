@@ -187,7 +187,7 @@
 		}];
 		
 		// Create button that will take us back to the title screen
-		CCMenuItemFont *backButton = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"back-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"back-button-selected%@.png", hdSuffix] block:^(id sender) {
+		CCMenuItemImage *backButton = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"back-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"back-button-selected%@.png", hdSuffix] block:^(id sender) {
 			[[SimpleAudioEngine sharedEngine] playEffect:@"button.caf"];
 			
 			// Ease the default logo node down into view, replacing the scores node
@@ -222,8 +222,13 @@
 		infoTitle.position = ccp(windowSize.width / 2, windowSize.height - infoTitle.contentSize.height / 2);
 		[infoNode addChild:infoTitle];
 		
+		// Create "credits" label
+		CCSprite *creditsLabel = [CCSprite spriteWithFile:[NSString stringWithFormat:@"credits%@.png", hdSuffix]];
+		creditsLabel.position = ccp(windowSize.width / 2, infoTitle.position.y - creditsLabel.contentSize.height / 1.5);
+		[infoNode addChild:creditsLabel];
+		
 		// Create button that will take us back to the title screen
-		CCMenuItemFont *backButtonInfo = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"back-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"back-button-selected%@.png", hdSuffix] block:^(id sender) {
+		CCMenuItemImage *backButtonInfo = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"back-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"back-button-selected%@.png", hdSuffix] block:^(id sender) {
 			[[SimpleAudioEngine sharedEngine] playEffect:@"button.caf"];
 			
 			// Ease the default logo node down into view, replacing the scores node
@@ -231,11 +236,35 @@
 			[titleNode runAction:[CCEaseBackInOut actionWithAction:[CCMoveTo actionWithDuration:1.0 position:ccp(0, 0)]]];
 		}];
 		
+		// Create button that resets local high scores
+		CCMenuItemImage *resetButton = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"reset-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"reset-button-selected%@.png", hdSuffix] block:^(id sender) {
+			// TODO: pop up modal which confirms data reset
+			// TODO: re-write the scores labels
+			
+			// Get user defaults
+			NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+			
+			// Re-save scores array to user defaults
+			[defaults setObject:[NSArray arrayWithObjects:[NSNumber numberWithInt:0],
+								 [NSNumber numberWithInt:0],
+								 [NSNumber numberWithInt:0],
+								 [NSNumber numberWithInt:0],
+								 [NSNumber numberWithInt:0],
+								 nil] forKey:@"scores"];
+			
+			// Show the gameplay intro "tutorial" again
+			[defaults setObject:[NSNumber numberWithBool:YES] forKey:@"showInstructions"];
+			
+			[defaults synchronize];
+		}];
+		
 		// Create menu that contains our buttons
-		CCMenu *menuInfo = [CCMenu menuWithItems:backButtonInfo, nil];
+		CCMenu *menuInfo = [CCMenu menuWithItems:resetButton, backButtonInfo, nil];
+		
+		[menuInfo alignItemsVerticallyWithPadding:120 * fontMultiplier];
 		
 		// Set position of menu to be at bottom of screen
-		[menuInfo setPosition:ccp(windowSize.width / 2, backButtonInfo.contentSize.height / 1.5)];
+		[menuInfo setPosition:ccp(windowSize.width / 2, backButtonInfo.contentSize.height * 2.5)];
 		
 		// Add menu to layer
 		[infoNode addChild:menuInfo z:2];
@@ -366,7 +395,7 @@
 	// Play some music!
 	if (![[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying])
 	{
-		[[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"1.mp3"];
+		[[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"1.caf"];
 	}
 	
 	// Show Game Center authentication

@@ -137,7 +137,7 @@
 	[[SimpleAudioEngine sharedEngine] preloadEffect:@"match2.caf"];
 	
 	// Preload a BGM track
-	[[SimpleAudioEngine sharedEngine] preloadBackgroundMusic:@"1.mp3"];
+	[[SimpleAudioEngine sharedEngine] preloadBackgroundMusic:@"1.caf"];
 	
 	// Turn down the BGM volume a bit
 	[[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.35];
