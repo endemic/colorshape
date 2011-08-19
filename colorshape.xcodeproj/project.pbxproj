@@ -175,6 +175,10 @@
 		7D0E57BA13F237D4006E2791 /* scores-button-selected-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D0E57BC13F237D4006E2791 /* scores-button-selected-hd.png */; };
 		7D0E57BE13F237DE006E2791 /* scores-button-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D0E57C013F237DE006E2791 /* scores-button-selected.png */; };
 		7D0E57C213F237E9006E2791 /* scores-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D0E57C413F237E9006E2791 /* scores-button.png */; };
+		7D38CF2A13FF041B00BEA42D /* ready-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D38CF2C13FF041B00BEA42D /* ready-hd.png */; };
+		7D38CF2D13FF041F00BEA42D /* start-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D38CF2F13FF041F00BEA42D /* start-hd.png */; };
+		7D38CF3613FF051600BEA42D /* ready.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D38CF3813FF051600BEA42D /* ready.png */; };
+		7D38CF3913FF051800BEA42D /* start.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D38CF3B13FF051800BEA42D /* start.png */; };
 		7D5DA07513F0902500505474 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D5DA07413F0902500505474 /* QuartzCore.framework */; };
 		7D5DA07713F0902500505474 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D5DA07613F0902500505474 /* OpenGLES.framework */; };
 		7D5DA07913F0902500505474 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D5DA07813F0902500505474 /* OpenAL.framework */; };
@@ -517,6 +521,14 @@
 		7D0E57C313F237E9006E2791 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/scores-button.png"; sourceTree = "<group>"; };
 		7D0E57C513F237EE006E2791 /* ja */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ja; path = "ja.lproj/scores-button.png"; sourceTree = "<group>"; };
 		7D2A39ED13F23E8D0050C64D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
+		7D38CF2B13FF041B00BEA42D /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/ready-hd.png"; sourceTree = "<group>"; };
+		7D38CF2E13FF041F00BEA42D /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/start-hd.png"; sourceTree = "<group>"; };
+		7D38CF3013FF044300BEA42D /* ja */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ja; path = "ja.lproj/ready-hd.png"; sourceTree = "<group>"; };
+		7D38CF3113FF044600BEA42D /* ja */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ja; path = "ja.lproj/start-hd.png"; sourceTree = "<group>"; };
+		7D38CF3713FF051600BEA42D /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = en.lproj/ready.png; sourceTree = "<group>"; };
+		7D38CF3A13FF051800BEA42D /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = en.lproj/start.png; sourceTree = "<group>"; };
+		7D38CF3C13FF051E00BEA42D /* ja */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ja; path = ja.lproj/ready.png; sourceTree = "<group>"; };
+		7D38CF3D13FF052200BEA42D /* ja */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ja; path = ja.lproj/start.png; sourceTree = "<group>"; };
 		7D5DA07013F0902500505474 /* colorshape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = colorshape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D5DA07413F0902500505474 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7D5DA07613F0902500505474 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -844,6 +856,10 @@
 				7D0E565313F228D5006E2791 /* top-ui-background.png */,
 				7D0E565513F228D5006E2791 /* flash-hd.png */,
 				7D0E565613F228D5006E2791 /* flash.png */,
+				7D38CF2C13FF041B00BEA42D /* ready-hd.png */,
+				7D38CF3813FF051600BEA42D /* ready.png */,
+				7D38CF2F13FF041F00BEA42D /* start-hd.png */,
+				7D38CF3B13FF051800BEA42D /* start.png */,
 				7D0E575813F22FFE006E2791 /* game-over-hd.png */,
 				7D0E575C13F23009006E2791 /* game-over.png */,
 				7D0492B413F751E600053098 /* high-scores-headline-hd.png */,
@@ -1694,6 +1710,10 @@
 				7DD364EA13FE6A0A00810197 /* next-button-selected-hd.png in Resources */,
 				7DD364E713FE6A0800810197 /* next-button-selected.png in Resources */,
 				7DD364E113FE6A0100810197 /* next-button.png in Resources */,
+				7D38CF2A13FF041B00BEA42D /* ready-hd.png in Resources */,
+				7D38CF2D13FF041F00BEA42D /* start-hd.png in Resources */,
+				7D38CF3613FF051600BEA42D /* ready.png in Resources */,
+				7D38CF3913FF051800BEA42D /* start.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2124,6 +2144,42 @@
 				7D0E57C513F237EE006E2791 /* ja */,
 			);
 			name = "scores-button.png";
+			sourceTree = "<group>";
+		};
+		7D38CF2C13FF041B00BEA42D /* ready-hd.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7D38CF2B13FF041B00BEA42D /* en */,
+				7D38CF3013FF044300BEA42D /* ja */,
+			);
+			name = "ready-hd.png";
+			sourceTree = "<group>";
+		};
+		7D38CF2F13FF041F00BEA42D /* start-hd.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7D38CF2E13FF041F00BEA42D /* en */,
+				7D38CF3113FF044600BEA42D /* ja */,
+			);
+			name = "start-hd.png";
+			sourceTree = "<group>";
+		};
+		7D38CF3813FF051600BEA42D /* ready.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7D38CF3713FF051600BEA42D /* en */,
+				7D38CF3C13FF051E00BEA42D /* ja */,
+			);
+			name = ready.png;
+			sourceTree = "<group>";
+		};
+		7D38CF3B13FF051800BEA42D /* start.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7D38CF3A13FF051800BEA42D /* en */,
+				7D38CF3D13FF052200BEA42D /* ja */,
+			);
+			name = start.png;
 			sourceTree = "<group>";
 		};
 		7DC0679F13FCB95200CCCF0B /* reset-button-hd.png */ = {

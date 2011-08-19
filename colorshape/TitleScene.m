@@ -207,9 +207,6 @@
 		
 		/**
 		 * Create "info" node that shows credits and other options
-		 * 1. Designed and programmed by Nathan Demick
-		 * 2. Show instructions next game start
-		 * 3. Erase local high scores
 		 */
 		
 		infoNode = [CCNode node];

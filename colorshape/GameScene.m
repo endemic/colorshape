@@ -41,8 +41,6 @@
 	// Apple recommends to re-assign "self" with the "super" return value
 	if ((self = [super init]))
 	{
-		[self setIsTouchEnabled:YES];
-		
 		// ask director the the window size
 		CGSize windowSize = [[CCDirector sharedDirector] winSize];
 		
@@ -159,6 +157,27 @@
 		// Play random music track
 		int trackNumber = (float)(arc4random() % 100) / 100 * 3 + 1;	// 1 - 3
 		[[SimpleAudioEngine sharedEngine] playBackgroundMusic:[NSString stringWithFormat:@"%i.caf", trackNumber]];
+		
+		// Set the layer to respond to touch events
+		[self setIsTouchEnabled:YES];
+		
+		// Display "ready?" "go!" text
+//		CCSprite *ready = [CCSprite spriteWithFile:[NSString stringWithFormat:@"ready%@.png", hdSuffix]];
+//		ready.position = ccp(windowSize.width / 2, windowSize.height / 2);
+//		ready.visible = false;
+//		[self addChild:ready];
+
+		/* example code */
+		
+//		id move = [CCMoveTo actionWithDuration:randomTime position:ccp(x * blockSize - blockSize / 2, y * blockSize + blockSize / 2)];
+//		id ease = [CCEaseIn actionWithAction:move rate:2];
+//		id sfx = [CCCallBlock actionWithBlock:^{
+//			[[SimpleAudioEngine sharedEngine] playEffect:@"block-fall.caf"];
+//		}];
+//		id recursive = [CCCallFuncN actionWithTarget:self selector:@selector(dropNextBlockAfter:)];
+//		
+//		[b runAction:[CCSequence actions:ease, sfx, recursive, nil]];
+		
 	}
 	return self;
 }
