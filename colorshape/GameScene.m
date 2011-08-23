@@ -158,28 +158,129 @@
 		int trackNumber = (float)(arc4random() % 100) / 100 * 3 + 1;	// 1 - 3
 		[[SimpleAudioEngine sharedEngine] playBackgroundMusic:[NSString stringWithFormat:@"%i.caf", trackNumber]];
 		
-		// Set the layer to respond to touch events
-		[self setIsTouchEnabled:YES];
+		// Set the layer to not respond to touch events - will wait until "ready?" "start!" message is displayed
+		[self setIsTouchEnabled:NO];
 		
-		// Display "ready?" "go!" text
-//		CCSprite *ready = [CCSprite spriteWithFile:[NSString stringWithFormat:@"ready%@.png", hdSuffix]];
-//		ready.position = ccp(windowSize.width / 2, windowSize.height / 2);
-//		ready.visible = false;
-//		[self addChild:ready];
-
-		/* example code */
+		// Get user defaults
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		
-//		id move = [CCMoveTo actionWithDuration:randomTime position:ccp(x * blockSize - blockSize / 2, y * blockSize + blockSize / 2)];
-//		id ease = [CCEaseIn actionWithAction:move rate:2];
-//		id sfx = [CCCallBlock actionWithBlock:^{
-//			[[SimpleAudioEngine sharedEngine] playEffect:@"block-fall.caf"];
-//		}];
-//		id recursive = [CCCallFuncN actionWithTarget:self selector:@selector(dropNextBlockAfter:)];
-//		
-//		[b runAction:[CCSequence actions:ease, sfx, recursive, nil]];
-		
+		if ([defaults boolForKey:@"showInstructions"] == YES)
+		{
+			// Run the "show instructions" method
+			[self showInstructions];
+			
+			// Save defaults so the instructions aren't shown again
+			[defaults setObject:[NSNumber numberWithBool:NO] forKey:@"showInstructions"];
+			[defaults synchronize];
+		}
+		else
+		{
+			// Show the "ready" "start" message
+			[self showReadyMessage];
+		}
 	}
 	return self;
+}
+
+- (void)showReadyMessage
+{
+	// ask director the the window size
+	CGSize windowSize = [[CCDirector sharedDirector] winSize];
+	
+	// This string gets appended onto all image filenames based on whether the game is on iPad or not
+	if ([GameSingleton sharedGameSingleton].isPad)
+	{
+		hdSuffix = @"-hd";
+	}
+	else
+	{
+		hdSuffix = @"";
+	}
+	
+	// Display "ready?" "start!" text
+	CCSprite *ready = [CCSprite spriteWithFile:[NSString stringWithFormat:@"ready%@.png", hdSuffix]];
+	ready.position = ccp(windowSize.width / 2, windowSize.height / 2 - ready.contentSize.height / 2);
+	ready.opacity = 0;
+	[self addChild:ready z:2];
+	
+	CCSprite *start = [CCSprite spriteWithFile:[NSString stringWithFormat:@"start%@.png", hdSuffix]];
+	start.position = ccp(windowSize.width / 2, windowSize.height / 2 - start.contentSize.height / 2);
+	start.opacity = 0;
+	[self addChild:start z:2];
+	
+	// Move/fade the "ready?" "start!" text into place, and enable layer touch when finished
+	id move = [CCMoveTo actionWithDuration:0.4 position:ccp(windowSize.width / 2, windowSize.height / 2)];
+	id ease = [CCEaseBackOut actionWithAction:move];
+	id fadeIn = [CCFadeIn actionWithDuration:0.3];
+	id wait = [CCDelayTime actionWithDuration:0.8];
+	id fadeOut = [CCFadeOut actionWithDuration:0.2];
+	id remove = [CCCallFuncN actionWithTarget:self selector:@selector(removeNodeFromParent:)];
+	id enableTouch = [CCCallBlock actionWithBlock:^{
+		[self setIsTouchEnabled:YES];
+	}];
+	id next = [CCCallBlock actionWithBlock:^{
+		id startSequence = [CCSequence actions:[CCSpawn actions:ease, fadeIn, nil], wait, fadeOut, remove, enableTouch, nil];
+		[start runAction:startSequence];
+	}];
+	
+	id readySequence = [CCSequence actions:wait, [CCSpawn actions:ease, fadeIn, nil], wait, fadeOut, remove, next, nil];
+	
+	// Run the move/fade simultaneously
+	[ready runAction:readySequence];
+}
+
+- (void)showInstructions
+{
+	// ask director the the window size
+	CGSize windowSize = [[CCDirector sharedDirector] winSize];
+	
+	// This string gets appended onto all image filenames based on whether the game is on iPad or not
+	if ([GameSingleton sharedGameSingleton].isPad)
+	{
+		hdSuffix = @"-hd";
+	}
+	else
+	{
+		hdSuffix = @"";
+	}
+	
+	// "in" action will be moving up and fading in
+	// "out" action will be simply fading out
+	
+	// Move/fade the instructional images into place, then show the "ready" "start" message when finished
+	id move = [CCMoveTo actionWithDuration:0.4 position:ccp(windowSize.width / 2, windowSize.height / 2)];
+	id ease = [CCEaseBackOut actionWithAction:move];
+	id fadeIn = [CCFadeIn actionWithDuration:0.3];
+	id wait = [CCDelayTime actionWithDuration:0.8];
+	id fadeOut = [CCFadeOut actionWithDuration:0.2];
+	id remove = [CCCallFuncN actionWithTarget:self selector:@selector(removeNodeFromParent:)];
+	id next = [CCCallBlock actionWithBlock:^{
+		id startSequence = [CCSequence actions:[CCSpawn actions:ease, fadeIn, nil], wait, fadeOut, nil];
+		//[start runAction:startSequence];
+	}];
+	
+	id sequence = [CCSequence actions:wait, [CCSpawn actions:ease, fadeIn, nil], wait, fadeOut, next, nil];
+	
+	// Create "next" button
+	CCMenuItemImage *nextButton = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"next-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"next-button-selected%@.png", hdSuffix] block:^(id sender) {
+																	
+		[[SimpleAudioEngine sharedEngine] playEffect:@"button.caf"];
+	}];
+	
+	// Create menu that contains our buttons
+	CCMenu *nextMenu = [CCMenu menuWithItems:nextButton, nil];
+	
+	// Set position of menu to be at bottom of screen
+	[nextMenu setPosition:ccp(windowSize.width / 2, nextButton.contentSize.height / 1.5)];
+	
+	// Add menu to layer
+	[self addChild:nextMenu z:2];
+	
+	CCSprite *tutorialSprite = [CCSprite spriteWithFile:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
+	tutorialSprite.position = ccp(windowSize.width / 2, windowSize.height / 2);
+	[self addChild:tutorialSprite z:2];
+	
+	NSLog(@"Trying to show instructions!");
 }
 
 - (void)update:(ccTime)dt
@@ -1169,8 +1270,10 @@
  */
 - (void)createStatusMessageAt:(CGPoint)position withText:(NSString *)text
 {
+	int defaultFontSize = 16;
 	// Create a label and add it to the layer
-	CCLabelBMFont *label = [CCLabelBMFont labelWithString:text fntFile:[NSString stringWithFormat:@"chalkduster-16%@.fnt", hdSuffix]];
+	CCLabelBMFont *label = [CCLabelBMFont labelWithString:text 
+												  fntFile:[NSString stringWithFormat:@"chalkduster-%i.fnt", defaultFontSize * fontMultiplier]];
 	label.position = position;
 	[self addChild:label z:10];		// Should be z-positioned on top of everything
 	

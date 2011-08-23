@@ -45,6 +45,8 @@
 + (id)scene;
 
 - (void)update:(ccTime)dt;
+- (void)showReadyMessage;
+- (void)showInstructions;
 - (void)gameOver;
 
 - (void)shiftLeft;

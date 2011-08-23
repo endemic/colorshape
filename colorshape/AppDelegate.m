@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "GameConfig.h"
 #import "TitleScene.h"
+#import "GameScene.h"
 #import "RootViewController.h"
 #import "GameSingleton.h"
 #import "SimpleAudioEngine.h"

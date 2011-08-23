@@ -68,17 +68,16 @@
 		[self addChild:bg];
 		
 		// Load UI graphics into texture cache
-		[[CCTextureCache sharedTextureCache] addImage:@"title-logo.png"];
-		[[CCTextureCache sharedTextureCache] addImage:@"play-button.png"];
-		[[CCTextureCache sharedTextureCache] addImage:@"scores-button.png"];
-		[[CCTextureCache sharedTextureCache] addImage:@"play-button-selected.png"];
-		[[CCTextureCache sharedTextureCache] addImage:@"scores-button-selected.png"];
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"title-logo%@.png", hdSuffix]];
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"play-button%@.png", hdSuffix]];
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"scores-button%@.png", hdSuffix]];
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"play-button-selected%@.png", hdSuffix]];
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"scores-button-selected%@.png", hdSuffix]];
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"flash%@.png", hdSuffix]];
 		
 		// Set default SFX volume to be a bit lower for the intro animation
 		[[SimpleAudioEngine sharedEngine] setEffectsVolume:0.25];
-		
-		lastRow = 0;
-		
+				
 		grid = [[NSMutableArray arrayWithCapacity:rows * cols] retain];
 		
 		// First time the game is run in a session, do a intro animation
@@ -86,8 +85,33 @@
 		// a random amount of time, then animates to position
 		if ([GameSingleton sharedGameSingleton].showIntroAnimation)
 		{
+			// This is a counter that is incremented when the top row is filled by the animated falling blocks
+			lastRow = 0;
+			
+			// Auto fill the far left and far right columns; they're needed for the seamless moving background,
+			// but introduce a delay in finishing the dropping animation and transitioning to the left->right animation
+			for (int x = 0; x <= rows; x += rows)
+			{
+				for (int y = 0; y < cols + 1; y++)
+				{
+					Block *b = [Block random];
+					
+					// Move to correct location on screen
+					[b setGridPosition:ccp(x, y)];
+					
+					int blockSize = b.contentSize.width;
+					b.position = ccp(x * blockSize - blockSize / 2, y * blockSize + blockSize / 2);
+					
+					// Add to layer
+					[self addChild:b];
+					
+					// Add to grid
+					[grid addObject:b];
+				}
+			}
+			
 			// Drop a bunch of blocks onto the screen
-			for (int x = 0; x < rows; x++)
+			for (int x = 1; x < rows - 1; x++)
 			{
 				Block *b = [Block random];
 				int y = 0;
@@ -133,7 +157,7 @@
 					
 					// Move to correct location on screen
 					[b setGridPosition:ccp(x, y)];
-					//[b snapToGridPosition];
+
 					int blockSize = b.contentSize.width;
 					b.position = ccp(x * blockSize - blockSize / 2, y * blockSize + blockSize / 2);
 					
@@ -168,6 +192,9 @@
 		
 		int defaultFontSize = 32;
 		
+		// Create an array to hold/reference the high scores labels, so they can be re-written if the user resets scores
+		NSMutableArray *highScoresLabels = [NSMutableArray array];
+		
 		// Iterate through array and print out high scores
 		for (int i = 0; i < [highScores count]; i++)
 		{
@@ -177,6 +204,7 @@
 			label.anchorPoint = ccp(0, 0.5); 
 			label.position = ccp(windowSize.width / 2 - windowSize.width / 3, (title.position.y + label.contentSize.height / 2) - label.contentSize.height * (i + 2));
 			[scoresNode addChild:label z:2];
+			[highScoresLabels addObject:label];
 		}
 		
 		leaderboardsButton = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"leaderboards-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"leaderboards-button-selected%@.png", hdSuffix] disabledImage:[NSString stringWithFormat:@"leaderboards-button-disabled%@.png", hdSuffix] block:^(id sender) {
@@ -236,7 +264,12 @@
 		// Create button that resets local high scores
 		CCMenuItemImage *resetButton = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"reset-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"reset-button-selected%@.png", hdSuffix] block:^(id sender) {
 			// TODO: pop up modal which confirms data reset
-			// TODO: re-write the scores labels
+			
+			// Re-write the scores labels to ZERO
+			for (int i = 0, j = [highScoresLabels count]; i < j; i++)
+			{
+				[[highScoresLabels objectAtIndex:i] setString:[NSString stringWithFormat:@"%i.%i\n", i + 1, 0]];
+			}
 			
 			// Get user defaults
 			NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -316,7 +349,10 @@
 	else
 	{
 		// Column is full. Move block to place and check whether the entire top row is full
-		if (++lastRow == rows)
+		lastRow++;
+		
+		// Checking vs. # of rows - 2 because two columns are off screen and were alredy pre-populated
+		if (lastRow == rows - 2)
 		{
 			// If top row is full, show UI elements
 			[b runAction:[CCSequence actions:ease, flash, nil]];
