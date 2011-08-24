@@ -140,6 +140,28 @@
 	// Preload a BGM track
 	[[SimpleAudioEngine sharedEngine] preloadBackgroundMusic:@"1.caf"];
 	
+	// If first time player has run the app, preload the "tutorial" images
+	if ([defaults boolForKey:@"showInstructions"] == YES)
+	{
+		NSString *hdSuffix;
+		// This string gets appended onto all image filenames based on whether the game is on iPad or not
+		if ([GameSingleton sharedGameSingleton].isPad)
+		{
+			hdSuffix = @"-hd";
+		}
+		else
+		{
+			hdSuffix = @"";
+		}
+		
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
+	}
+	
 	// Turn down the BGM volume a bit
 	[[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.35];
 	

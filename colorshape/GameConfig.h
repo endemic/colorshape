@@ -47,6 +47,8 @@
 #define kAnimationDuration 0.2
 #define kMaxTimeLimit 10.0
 #define kMinimumMatchCount 4
+#define kChainCountdownDelay 2.0
+#define kPointsPerBlock 10
 
 #endif // __GAME_CONFIG_H
 

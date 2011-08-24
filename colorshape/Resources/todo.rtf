@@ -8,33 +8,21 @@
 Things to do\
 ============\
 \
-* Fix retina "+ time" label\
-* Add "Ready?" "Go" text\
+* Balance gameplay\
+	* Chain counter runs down too quickly or else regular matches don't give enough time back\
+	* Make sure level progression is working correctly\
+* Create Game Over music\
+* Fix initial block generation so there are no matches starting off\
+* Add a confirmation modal to the score reset\
 \
 \
-GAME DESIGN\
------------\
-* Level increases after an arbitrary # of points\
-\
-ART\
----\
-* Create "How to play" image/text sequence\
-	* Show hand/finger moving blocks around (Move blocks)\
-	* Show checkmark after 4 same color blocks (Match colors!)\
-	* Show checkmark after 4 shame shape blocks (Match shapes!)\
-	\
-* Re-work the "background 0" pattern\
-\
-SOUND/MUSIC\
----------\
-* Create Game Over SFX or music\
-\
-PROGRAMMING\
------------\
-* Store matches in their own arrays - have two simultaneous matches increase the combo multiplier\
-	* This would also allow a status message at the location of the match\
-\
-WEIRDNESS\
+BUGS\
 ---------\
 * Figure out how to re-enable "Leaderboards" button when player becomes authenticated outside of app\
-}
+* Touches near the top of the block grid trigger a crash\
+\
+\
+## Improvements for next update ##\
+* Try to have a "disappear" animation for each block and then just one particle emitter\
+* Store matches in their own arrays - have two simultaneous matches increase the combo multiplier\
+	* This would also allow a status message at the location of the match}

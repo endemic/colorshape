@@ -114,7 +114,7 @@
 		[scoreLabel setColor:ccc3(0, 0, 0)];
 		[topUi addChild:scoreLabel z:4];
 		
-		// Set up timer
+		// Set up timer AKA "move counter"
 		timeRemainingDisplay = [CCProgressTimer progressWithFile:[NSString stringWithFormat:@"timer-gradient%@.png", hdSuffix]];
 		timeRemainingDisplay.type = kCCProgressTimerTypeVerticalBarBT;
 		timeRemainingDisplay.percentage = 100.0;
@@ -244,8 +244,9 @@
 		hdSuffix = @"";
 	}
 	
-	// "in" action will be moving up and fading in
-	// "out" action will be simply fading out
+	/*
+	 Actions
+	 */
 	
 	// Move/fade the instructional images into place, then show the "ready" "start" message when finished
 	id move = [CCMoveTo actionWithDuration:0.4 position:ccp(windowSize.width / 2, windowSize.height / 2)];
@@ -254,31 +255,121 @@
 	id wait = [CCDelayTime actionWithDuration:0.8];
 	id fadeOut = [CCFadeOut actionWithDuration:0.2];
 	id remove = [CCCallFuncN actionWithTarget:self selector:@selector(removeNodeFromParent:)];
-	id next = [CCCallBlock actionWithBlock:^{
-		id startSequence = [CCSequence actions:[CCSpawn actions:ease, fadeIn, nil], wait, fadeOut, nil];
-		//[start runAction:startSequence];
-	}];
 	
-	id sequence = [CCSequence actions:wait, [CCSpawn actions:ease, fadeIn, nil], wait, fadeOut, next, nil];
+	id show = [CCSpawn actions:ease, fadeIn, nil];
+		
+	/* 
+	 Create all "tutorial" sprites 
+	 */
 	
-	// Create "next" button
+	CCSprite *stepOne = [CCSprite spriteWithFile:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
+	stepOne.position = ccp(windowSize.width / 2, windowSize.height / 2 - windowSize.height / 10);	// Slightly below the final place where the image will be displayed
+	stepOne.opacity = 0;	// Hide the image initially
+	[self addChild:stepOne z:4];
+	
+	CCSprite *stepTwo = [CCSprite spriteWithFile:[NSString stringWithFormat:@"2%@.png", hdSuffix]];
+	stepTwo.position = ccp(windowSize.width / 2, windowSize.height / 2 - windowSize.height / 10);	// Slightly below the final place where the image will be displayed
+	stepTwo.opacity = 0;	// Hide the image initially
+	[self addChild:stepTwo z:4];
+	
+	CCSprite *stepThree = [CCSprite spriteWithFile:[NSString stringWithFormat:@"3%@.png", hdSuffix]];
+	stepThree.position = ccp(windowSize.width / 2, windowSize.height / 2 - windowSize.height / 10);	// Slightly below the final place where the image will be displayed
+	stepThree.opacity = 0;	// Hide the image initially
+	[self addChild:stepThree z:4];
+	
+	CCSprite *stepFour = [CCSprite spriteWithFile:[NSString stringWithFormat:@"4%@.png", hdSuffix]];
+	stepFour.position = ccp(windowSize.width / 2, windowSize.height / 2 - windowSize.height / 10);	// Slightly below the final place where the image will be displayed
+	stepFour.opacity = 0;	// Hide the image initially
+	[self addChild:stepFour z:4];
+	
+	CCSprite *stepFive = [CCSprite spriteWithFile:[NSString stringWithFormat:@"5%@.png", hdSuffix]];
+	stepFive.position = ccp(windowSize.width / 2, windowSize.height / 2 - windowSize.height / 10);	// Slightly below the final place where the image will be displayed
+	stepFive.opacity = 0;	// Hide the image initially
+	[self addChild:stepFive z:4];
+	
+	CCSprite *stepSix = [CCSprite spriteWithFile:[NSString stringWithFormat:@"6%@.png", hdSuffix]];
+	stepSix.position = ccp(windowSize.width / 2, windowSize.height / 2 - windowSize.height / 10);	// Slightly below the final place where the image will be displayed
+	stepSix.opacity = 0;	// Hide the image initially
+	[self addChild:stepSix z:4];
+	
+	/*
+	 Create button and menu
+	 */
 	CCMenuItemImage *nextButton = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"next-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"next-button-selected%@.png", hdSuffix] block:^(id sender) {
-																	
+		
 		[[SimpleAudioEngine sharedEngine] playEffect:@"button.caf"];
+		
+		// Increase the step value - will this work?
+		static int step = 1;
+		step++;
+		
+		switch (step)
+		{
+			case 2:
+				// Hide the first step, then remove it from the layer
+				[stepOne runAction:[CCSequence actions:fadeOut, remove, nil]];
+				
+				// Show the second step
+				[stepTwo runAction:show];
+				break;
+			case 3:
+				// Hide the second step, then remove it from the layer
+				[stepTwo runAction:[CCSequence actions:fadeOut, remove, nil]];
+				
+				// Show the third step
+				[stepThree runAction:show];
+				break;
+			case 4:
+				// Hide the third step, then remove it from the layer
+				[stepThree runAction:[CCSequence actions:fadeOut, remove, nil]];
+				
+				// Show the fourth step
+				[stepFour runAction:show];
+				break;
+			case 5:
+				// Hide the fourth step, then remove it from the layer
+				[stepFour runAction:[CCSequence actions:fadeOut, remove, nil]];
+				
+				// Show the fifth step
+				[stepFive runAction:show];
+				break;
+			case 6:
+				// Hide the fifth step, then remove it from the layer
+				[stepFive runAction:[CCSequence actions:fadeOut, remove, nil]];
+				
+				// Show the sixth step
+				[stepSix runAction:show];
+				break;
+			case 7:
+				// Hide the sixth step, then remove it from the layer
+				[stepSix runAction:[CCSequence actions:fadeOut, remove, nil]];
+				
+				// Hide the button and remove it from the layer
+				[sender runAction:[CCSequence actions:fadeOut, remove, nil]];
+				
+				// Show the "ready?" "start!" message
+				[self showReadyMessage];
+				break;
+		}
 	}];
+	
+	// Hide the button
+	nextButton.opacity = 0;
 	
 	// Create menu that contains our buttons
 	CCMenu *nextMenu = [CCMenu menuWithItems:nextButton, nil];
 	
 	// Set position of menu to be at bottom of screen
-	[nextMenu setPosition:ccp(windowSize.width / 2, nextButton.contentSize.height / 1.5)];
+	nextMenu.position = ccp(windowSize.width / 2, nextButton.contentSize.height / 1.5);
 	
 	// Add menu to layer
 	[self addChild:nextMenu z:2];
 	
-	CCSprite *tutorialSprite = [CCSprite spriteWithFile:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
-	tutorialSprite.position = ccp(windowSize.width / 2, windowSize.height / 2);
-	[self addChild:tutorialSprite z:2];
+	// Tell the first step to show
+	[stepOne runAction:[CCSequence actions:wait, show, [CCCallBlock actionWithBlock:^{
+		// Tell the first button to show after the first step appears
+		[nextButton runAction:[CCSequence actions:wait, fadeIn, nil]];
+	}], nil]];
 	
 	NSLog(@"Trying to show instructions!");
 }
@@ -394,11 +485,11 @@
 	touchRow = (touchPoint.y - touchOffset.y) / blockSize + gridOffset;
 	touchCol = (touchPoint.x - touchOffset.x) / blockSize + gridOffset;
 	
-    //	NSMutableString *tmp = [NSMutableString stringWithString:@""];
-    //	for (int i = touchRow * rows; i < touchRow * rows + cols; i++)	// Check row values
-    //	//for (int i = touchCol; i < rows * cols; i += cols)					// Check column values
-    //		[tmp appendFormat:@"%i ", [[grid objectAtIndex:i] number]];
-    //	NSLog(tmp);
+	// This prevents a crash due to a player touching above the grid area
+	if (touchRow > 9)
+	{
+		touchRow = 9;
+	}
 }
 
 - (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -903,7 +994,6 @@
 	NSMutableString *previousColor = [NSMutableString stringWithString:@""];
 	NSMutableString *previousShape = [NSMutableString stringWithString:@""];
 	
-	int minimumMatchCount = kMinimumMatchCount;		// Number of adjacent blocks needed to disappear
 	Block *b;
 	
 	// Find horizontal matches
@@ -929,7 +1019,7 @@
 			else
 			{
 				// If the set array has enough objects, add them to the "removal" array
-				if ([colorArray count] >= minimumMatchCount)
+				if ([colorArray count] >= kMinimumMatchCount)
 					[removeArray addObjectsFromArray:colorArray];
                 
 				// Reset the set
@@ -947,7 +1037,7 @@
 			else
 			{
 				// If the set array has enough objects, add them to the "removal" array
-				if ([shapeArray count] >= minimumMatchCount)
+				if ([shapeArray count] >= kMinimumMatchCount)
 					[removeArray addObjectsFromArray:shapeArray];
                 
 				// Reset the set
@@ -966,10 +1056,10 @@
 		}	// End col for loop
 		
 		// Do another check here at the end of the row for both shape & color
-		if ([shapeArray count] >= minimumMatchCount)
+		if ([shapeArray count] >= kMinimumMatchCount)
 			[removeArray addObjectsFromArray:shapeArray];
 		
-		if ([colorArray count] >= minimumMatchCount)
+		if ([colorArray count] >= kMinimumMatchCount)
 			[removeArray addObjectsFromArray:colorArray];
 		
 		// Remove all blocks in matching arrays at the end of a row
@@ -1000,7 +1090,7 @@
 			else
 			{
 				// If the set array has enough objects, add them to the "removal" array
-				if ([colorArray count] >= minimumMatchCount)
+				if ([colorArray count] >= kMinimumMatchCount)
 					[removeArray addObjectsFromArray:colorArray];
 				
 				// Reset the set
@@ -1018,7 +1108,7 @@
 			else
 			{
 				// If the set array has enough objects, add them to the "removal" array
-				if ([shapeArray count] >= minimumMatchCount)
+				if ([shapeArray count] >= kMinimumMatchCount)
 					[removeArray addObjectsFromArray:shapeArray];
 				
 				// Reset the set
@@ -1036,10 +1126,10 @@
 		}	// End of each block in column
 		
 		// Do another check here at the end of the row for both shape & color
-		if ([shapeArray count] >= minimumMatchCount)
+		if ([shapeArray count] >= kMinimumMatchCount)
 			[removeArray addObjectsFromArray:shapeArray];
 		
-		if ([colorArray count] >= minimumMatchCount)
+		if ([colorArray count] >= kMinimumMatchCount)
 			[removeArray addObjectsFromArray:colorArray];
 		
 		// Remove all blocks in matching arrays at the end of a column
@@ -1072,7 +1162,7 @@
 		{
 			// "count down" the combo counter after a short delay
 			[self runAction:[CCSequence actions:
-							 [CCDelayTime actionWithDuration:1.5],
+							 [CCDelayTime actionWithDuration:kChainCountdownDelay],
 							 [CCCallFunc actionWithTarget:self selector:@selector(comboCountdown)],
 							 nil]];
 		}
@@ -1080,7 +1170,6 @@
 	
 	// Remove all blocks with indices in removeArray
 	for (int i = 0, j = [removeArray count]; i < j; i++)
-        //for (NSNumber num in removeArray)
 	{
 		int gridIndex = [[removeArray objectAtIndex:i] intValue];
 		Block *remove = [grid objectAtIndex:gridIndex];
@@ -1095,7 +1184,7 @@
 			[self dropBlocks];
 			
 			// Update score, using the current combo count as a multiplier
-			[self updateScore:10 * combo];
+			[self updateScore:kPointsPerBlock * combo];
 			
 			// Update time limit
 			[self updateTime];
@@ -1254,7 +1343,7 @@
 	// [[CCTextureCache sharedTextureCache] textureForKey:@"particle.png"]];
 	
 	// additive
-	[particleSystem setBlendAdditive:NO];
+	[particleSystem setBlendAdditive:YES];
 	
 	// Auto-remove the emitter when it is done!
 	[particleSystem setAutoRemoveOnFinish:YES];
@@ -1279,10 +1368,11 @@
 	
 	// Run some move/fade actions
 	CCMoveBy *move = [CCMoveBy actionWithDuration:1.5 position:ccp(0, label.contentSize.height)];
+	CCEaseBackOut *ease = [CCEaseBackOut actionWithAction:move];
 	CCFadeOut *fade = [CCFadeOut actionWithDuration:1];
 	CCCallFuncN *remove = [CCCallFuncN actionWithTarget:self selector:@selector(removeNodeFromParent:)];
 	
-	[label runAction:[CCSequence actions:[CCSpawn actions:move, fade, nil], remove, nil]];
+	[label runAction:[CCSequence actions:[CCSpawn actions:ease, fade, nil], remove, nil]];
 }
 
 - (void)flash
