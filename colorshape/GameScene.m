@@ -134,9 +134,51 @@
 		int gridCapacity = rows * cols;
 		grid = [[NSMutableArray arrayWithCapacity:gridCapacity] retain];
 		
-		// array[x + y*size] === array[x][y]
-		for (int i = 0; i < gridCapacity; i++)
-			[self newBlockAtIndex:i];
+		// Fill grid with puzzle blocks
+		// Ensure that each block is sufficiently different from adjacent ones so that no matches will occur when the board is generated
+		for (int i = 0; i < gridCapacity; i++) 
+		{
+			BOOL valid = YES;
+
+			do 
+			{
+				[self newBlockAtIndex:i];
+				
+				// Check the current block color/shape vs. the one to the left and the one below
+				Block *b = [grid objectAtIndex:i];
+				
+				// Check against left
+				if (i > 0)
+				{
+					Block *c = [grid objectAtIndex:i - 1];
+					NSLog(@"Comparing index %i vs. %i", i, i - 1);
+					if ([c.colour isEqualToString:b.colour] || [c.shape isEqualToString:b.shape])
+					{
+						valid = NO;
+					}
+					else
+					{
+						valid = YES;
+					}
+				}
+				
+				// Check against below
+				if (i > cols)
+				{
+					Block *d = [grid objectAtIndex:i - cols];
+					NSLog(@"Comparing index %i vs. %i", i, i - cols);
+					if ([d.colour isEqualToString:b.colour] || [d.shape isEqualToString:b.shape])
+					{
+						valid = NO;
+					}
+					else
+					{
+						valid = YES;
+					}
+				}
+			} 
+			while (valid == NO);
+		}
 		
 		// Reset the "buffer" blocks hidden around the outside of the screen
 		[self resetBuffer];
@@ -405,7 +447,11 @@
 	// ask director the the window size
 	CGSize windowSize = [[CCDirector sharedDirector] winSize];
 	
+	// Visual effeckuts
 	[self flash];
+	
+	// Stop playing muzak
+	[[SimpleAudioEngine sharedEngine] stopBackgroundMusic];
 	
 	// Game over, man!
 	CCSprite *gameOverText = [CCSprite spriteWithFile:[NSString stringWithFormat:@"game-over%@.png", hdSuffix]];
@@ -1274,18 +1320,24 @@
 	// Move it to the correct location in grid
 	[b snapToGridPosition];
     
-	// Add to layer
-	[self addChild:b z:1];
-	
 	// Do a check here to see if we need to replace an object or insert
 	if ([grid count] > index && [grid objectAtIndex:index] != nil)
 	{
+		// Remove the previous block sprite from the scene, if necessary
+		if ([self.children containsObject:[grid objectAtIndex:index]])
+		{
+			[self removeChild:[grid objectAtIndex:index] cleanup:YES];
+		}
+		
 		[grid replaceObjectAtIndex:index withObject:b];
 	}
 	else
 	{
 		[grid insertObject:b atIndex:index];
 	}
+	
+	// Add to layer
+	[self addChild:b z:1];
 }
 
 - (void)createParticlesAt:(CGPoint)position
