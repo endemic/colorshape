@@ -325,6 +325,7 @@
 		7DFBDD9314034BE200FE1B12 /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DFBDD9514034BE200FE1B12 /* 4.png */; };
 		7DFBDD9614034BE500FE1B12 /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DFBDD9814034BE500FE1B12 /* 5.png */; };
 		7DFBDD9914034BE800FE1B12 /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DFBDD9B14034BE800FE1B12 /* 6.png */; };
+		7DFFD14D140596C40080A72E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7D5518D0140587E600382621 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1170,6 +1171,8 @@
 		7D5DA08513F0902500505474 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7D2A39ED13F23E8D0050C64D /* Info.plist */,
+				7D5518D0140587E600382621 /* InfoPlist.strings */,
 				7D0E55F913F228D5006E2791 /* fonts */,
 				7D0E560613F228D5006E2791 /* images */,
 				7D0E569513F228D5006E2791 /* music */,
@@ -1187,8 +1190,6 @@
 				7D5DA09213F0902500505474 /* Icon.png */,
 				7D5DA09413F0902500505474 /* Icon@2x.png */,
 				7D5DA09713F0902500505474 /* iTunesArtwork */,
-				7D2A39ED13F23E8D0050C64D /* Info.plist */,
-				7D5518D0140587E600382621 /* InfoPlist.strings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1782,6 +1783,7 @@
 				7DFBDD9614034BE500FE1B12 /* 5.png in Resources */,
 				7DFBDD8714034BD400FE1B12 /* 6-hd.png in Resources */,
 				7DFBDD9914034BE800FE1B12 /* 6.png in Resources */,
+				7DFFD14D140596C40080A72E /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
