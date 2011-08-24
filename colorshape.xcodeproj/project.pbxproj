@@ -474,8 +474,6 @@
 		7D0E56A713F228D5006E2791 /* match2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = match2.wav; sourceTree = "<group>"; };
 		7D0E56A813F228D5006E2791 /* move.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = move.wav; sourceTree = "<group>"; };
 		7D0E56A913F228D5006E2791 /* todo.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = todo.rtf; path = Resources/todo.rtf; sourceTree = "<group>"; };
-		7D0E575213F2295F006E2791 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		7D0E575413F22964006E2791 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7D0E575713F22FFE006E2791 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/game-over-hd.png"; sourceTree = "<group>"; };
 		7D0E575913F23004006E2791 /* ja */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ja; path = "ja.lproj/game-over-hd.png"; sourceTree = "<group>"; };
 		7D0E575B13F23009006E2791 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/game-over.png"; sourceTree = "<group>"; };
@@ -541,6 +539,8 @@
 		7D38CF3A13FF051800BEA42D /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = en.lproj/start.png; sourceTree = "<group>"; };
 		7D38CF3C13FF051E00BEA42D /* ja */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ja; path = ja.lproj/ready.png; sourceTree = "<group>"; };
 		7D38CF3D13FF052200BEA42D /* ja */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ja; path = ja.lproj/start.png; sourceTree = "<group>"; };
+		7D5518CF140587E600382621 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7D5518D1140587EB00382621 /* ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7D5DA07013F0902500505474 /* colorshape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = colorshape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D5DA07413F0902500505474 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7D5DA07613F0902500505474 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -1188,7 +1188,7 @@
 				7D5DA09413F0902500505474 /* Icon@2x.png */,
 				7D5DA09713F0902500505474 /* iTunesArtwork */,
 				7D2A39ED13F23E8D0050C64D /* Info.plist */,
-				7D0E575313F2295F006E2791 /* InfoPlist.strings */,
+				7D5518D0140587E600382621 /* InfoPlist.strings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1953,15 +1953,6 @@
 			name = "top-ui-background.png";
 			sourceTree = "<group>";
 		};
-		7D0E575313F2295F006E2791 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7D0E575213F2295F006E2791 /* en */,
-				7D0E575413F22964006E2791 /* ja */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		7D0E575813F22FFE006E2791 /* game-over-hd.png */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2250,6 +2241,16 @@
 			name = start.png;
 			sourceTree = "<group>";
 		};
+		7D5518D0140587E600382621 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7D5518CF140587E600382621 /* en */,
+				7D5518D1140587EB00382621 /* ja */,
+			);
+			name = InfoPlist.strings;
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		7DC0679F13FCB95200CCCF0B /* reset-button-hd.png */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2509,7 +2510,7 @@
 				GCC_PREFIX_HEADER = colorshape/Prefix.pch;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				INFOPLIST_FILE = colorshape/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2526,7 +2527,7 @@
 				GCC_PREFIX_HEADER = colorshape/Prefix.pch;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				INFOPLIST_FILE = colorshape/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

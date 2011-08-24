@@ -132,28 +132,20 @@
 	[defaults registerDefaults:defaultDefaults];
 	[defaults synchronize];
 	
-	// Preload some simple audio
-	[[SimpleAudioEngine sharedEngine] preloadEffect:@"button.caf"];
-	[[SimpleAudioEngine sharedEngine] preloadEffect:@"move.caf"];
-	[[SimpleAudioEngine sharedEngine] preloadEffect:@"match2.caf"];
-	
-	// Preload a BGM track
-	[[SimpleAudioEngine sharedEngine] preloadBackgroundMusic:@"1.caf"];
+	NSString *hdSuffix;
+	// This string gets appended onto all image filenames based on whether the game is on iPad or not
+	if ([GameSingleton sharedGameSingleton].isPad)
+	{
+		hdSuffix = @"-hd";
+	}
+	else
+	{
+		hdSuffix = @"";
+	}
 	
 	// If first time player has run the app, preload the "tutorial" images
 	if ([defaults boolForKey:@"showInstructions"] == YES)
 	{
-		NSString *hdSuffix;
-		// This string gets appended onto all image filenames based on whether the game is on iPad or not
-		if ([GameSingleton sharedGameSingleton].isPad)
-		{
-			hdSuffix = @"-hd";
-		}
-		else
-		{
-			hdSuffix = @"";
-		}
-		
 		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
 		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
 		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
@@ -161,6 +153,24 @@
 		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
 		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
 	}
+	
+	// Preload particle image
+	[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"particle%@.png", hdSuffix]];
+	
+	// Preload background images
+	for (int i = 0; i < 10; i++)
+	{
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"background-%i%@.png", i, hdSuffix]];
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"grid-background-%i%@.png", i, hdSuffix]];
+	}
+	
+	// Preload some simple audio
+	[[SimpleAudioEngine sharedEngine] preloadEffect:@"button.caf"];
+	[[SimpleAudioEngine sharedEngine] preloadEffect:@"move.caf"];
+	[[SimpleAudioEngine sharedEngine] preloadEffect:@"match2.caf"];
+	
+	// Preload a BGM track
+	[[SimpleAudioEngine sharedEngine] preloadBackgroundMusic:@"1.caf"];
 	
 	// Turn down the BGM volume a bit
 	[[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.35];

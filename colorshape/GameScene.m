@@ -151,7 +151,7 @@
 				if (i > 0)
 				{
 					Block *c = [grid objectAtIndex:i - 1];
-					NSLog(@"Comparing index %i vs. %i", i, i - 1);
+					//NSLog(@"Comparing index %i vs. %i", i, i - 1);
 					if ([c.colour isEqualToString:b.colour] || [c.shape isEqualToString:b.shape])
 					{
 						valid = NO;
@@ -166,7 +166,7 @@
 				if (i > cols)
 				{
 					Block *d = [grid objectAtIndex:i - cols];
-					NSLog(@"Comparing index %i vs. %i", i, i - cols);
+					//NSLog(@"Comparing index %i vs. %i", i, i - cols);
 					if ([d.colour isEqualToString:b.colour] || [d.shape isEqualToString:b.shape])
 					{
 						valid = NO;
@@ -182,16 +182,6 @@
 		
 		// Reset the "buffer" blocks hidden around the outside of the screen
 		[self resetBuffer];
-		
-		// Preload particle image
-		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"particle%@.png", hdSuffix]];
-		
-		// Preload background images
-		for (int i = 0; i < 10; i++)
-		{
-			[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"background-%i%@.png", i, hdSuffix]];
-			[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"grid-background-%i%@.png", i, hdSuffix]];
-		}
 		
 		// Schedule an update method
 		[self scheduleUpdate];
@@ -413,7 +403,7 @@
 		[nextButton runAction:[CCSequence actions:wait, fadeIn, nil]];
 	}], nil]];
 	
-	NSLog(@"Trying to show instructions!");
+	//NSLog(@"Trying to show instructions!");
 }
 
 - (void)update:(ccTime)dt
@@ -485,7 +475,7 @@
 	if ([GameSingleton sharedGameSingleton].gameMode == kGameModeNormal)
 	{
 		[[GameSingleton sharedGameSingleton] reportScore:score forCategory:@"com.ganbarugames.colorshape.normal"];
-		NSLog(@"Trying to report a high score!");
+		NSLog(@"Trying to send a score to Game Center!");
 	}
 	
 	// Get scores array stored in user defaults
@@ -510,7 +500,7 @@
 			
 			[defaults synchronize];
 			
-			NSLog(@"Saved new high score of %i", score);
+			//NSLog(@"Saved new high score of %i", score);
 			
 			// Bust out of the loop 
 			break;
@@ -887,8 +877,6 @@
 	[[grid objectAtIndex:i] setGridPosition:ccp(x, y)];
 	
 	[self resetBuffer];
-	
-	//NSLog(@"Shift left");
 }
 
 - (void)shiftRight
@@ -917,8 +905,6 @@
 	[[grid objectAtIndex:i] setGridPosition:ccp(x, y)];
     
 	[self resetBuffer];
-	
-	//NSLog(@"Shift right");
 }
 
 - (void)shiftUp
@@ -947,8 +933,6 @@
 	[[grid objectAtIndex:i] setGridPosition:ccp(x, y)];
 	
 	[self resetBuffer];
-	
-	//NSLog(@"Shift up");
 }
 
 - (void)shiftDown
@@ -977,8 +961,6 @@
 	[[grid objectAtIndex:i] setGridPosition:ccp(x, y)];
 	
 	[self resetBuffer];
-	
-	//NSLog(@"Shift down");
 }
 
 - (void)resetBuffer
@@ -1021,8 +1003,6 @@
 		destination.colour = source.colour;
 		destination.shape = source.shape;
 		destination.texture = source.texture;
-		
-		//NSLog(@"Source: %i, desintation: %i", i * rows + 1, i * rows + (cols - 1));
 	}
 }
 
@@ -1066,7 +1046,9 @@
 			{
 				// If the set array has enough objects, add them to the "removal" array
 				if ([colorArray count] >= kMinimumMatchCount)
-					[removeArray addObjectsFromArray:colorArray];
+				{
+					[removeArray addObject:[NSArray arrayWithArray:colorArray]];
+				}
                 
 				// Reset the set
 				[colorArray removeAllObjects];
@@ -1084,7 +1066,9 @@
 			{
 				// If the set array has enough objects, add them to the "removal" array
 				if ([shapeArray count] >= kMinimumMatchCount)
-					[removeArray addObjectsFromArray:shapeArray];
+				{
+					[removeArray addObject:[NSArray arrayWithArray:shapeArray]];
+				}
                 
 				// Reset the set
 				[shapeArray removeAllObjects];
@@ -1103,10 +1087,14 @@
 		
 		// Do another check here at the end of the row for both shape & color
 		if ([shapeArray count] >= kMinimumMatchCount)
-			[removeArray addObjectsFromArray:shapeArray];
+		{
+			[removeArray addObject:[NSArray arrayWithArray:shapeArray]];
+		}
 		
 		if ([colorArray count] >= kMinimumMatchCount)
-			[removeArray addObjectsFromArray:colorArray];
+		{
+			[removeArray addObject:[NSArray arrayWithArray:colorArray]];
+		}
 		
 		// Remove all blocks in matching arrays at the end of a row
 		[shapeArray removeAllObjects];
@@ -1137,7 +1125,9 @@
 			{
 				// If the set array has enough objects, add them to the "removal" array
 				if ([colorArray count] >= kMinimumMatchCount)
-					[removeArray addObjectsFromArray:colorArray];
+				{
+					[removeArray addObject:[NSArray arrayWithArray:colorArray]];
+				}
 				
 				// Reset the set
 				[colorArray removeAllObjects];
@@ -1155,7 +1145,9 @@
 			{
 				// If the set array has enough objects, add them to the "removal" array
 				if ([shapeArray count] >= kMinimumMatchCount)
-					[removeArray addObjectsFromArray:shapeArray];
+				{
+					[removeArray addObject:[NSArray arrayWithArray:shapeArray]];
+				}
 				
 				// Reset the set
 				[shapeArray removeAllObjects];
@@ -1173,10 +1165,14 @@
 		
 		// Do another check here at the end of the row for both shape & color
 		if ([shapeArray count] >= kMinimumMatchCount)
-			[removeArray addObjectsFromArray:shapeArray];
+		{
+			[removeArray addObject:[NSArray arrayWithArray:shapeArray]];
+		}
 		
 		if ([colorArray count] >= kMinimumMatchCount)
-			[removeArray addObjectsFromArray:colorArray];
+		{
+			[removeArray addObject:[NSArray arrayWithArray:colorArray]];
+		}
 		
 		// Remove all blocks in matching arrays at the end of a column
 		[shapeArray removeAllObjects];
@@ -1188,8 +1184,9 @@
 	{
 		[[SimpleAudioEngine sharedEngine] playEffect:@"match2.caf"];
 		
-		// Increment combo counter
-		combo++;
+		// Increment combo counter - each object in the removeArray is actually another array containing matched blocks
+		// so the length of removeArray equals the number of simultaneous matches
+		combo += [removeArray count];
 		[comboLabel setString:[NSString stringWithFormat:@"%ix", combo]];
 		
 		// Unschedule the method which depletes the combo counter
@@ -1217,27 +1214,43 @@
 	// Remove all blocks with indices in removeArray
 	for (int i = 0, j = [removeArray count]; i < j; i++)
 	{
-		int gridIndex = [[removeArray objectAtIndex:i] intValue];
-		Block *remove = [grid objectAtIndex:gridIndex];
+		// Each object in removeArray is another array that contains block indices
+		NSArray *blocks = [removeArray objectAtIndex:i];
+		CGPoint averagePosition = ccp(0, 0);
 		
-		if (remove)
+		for (int k = 0, l = [blocks count]; k < l; k++)
 		{
-			[self createParticlesAt:remove.position];
-			[self removeChild:remove cleanup:NO];
-			[grid replaceObjectAtIndex:gridIndex withObject:[NSNull null]];
+			// Each object in each "blocks" array is a grid index
+			int gridIndex = [[blocks objectAtIndex:k] intValue];
+			Block *remove = [grid objectAtIndex:gridIndex];
 			
-			// Drop more blocks in to replace the ones that were removed
-			[self dropBlocks];
-			
-			// Update score, using the current combo count as a multiplier
-			[self updateScore:kPointsPerBlock * combo];
-			
-			// Update time limit
-			[self updateTime];
-			
-			if (combo < 1)
-				NSLog(@"ZOMG, combo is less than one!");
+			if (remove)
+			{
+				// Figure out the average "position" of the blocks in order to show a status message/effect
+				averagePosition = ccpAdd(averagePosition, remove.position);
+//				averagePosition = ccp(averagePosition.x + remove.position.x, averagePosition.y + remove.position.y);
+				
+				[self removeChild:remove cleanup:YES];
+				[grid replaceObjectAtIndex:gridIndex withObject:[NSNull null]];
+				
+				// Drop more blocks in to replace the ones that were removed
+				[self dropBlocks];
+				
+				// Update score, using the current combo count as a multiplier
+				[self updateScore:kPointsPerBlock * combo];
+				
+				// Update time limit
+				[self updateTime];
+				
+//				if (combo < 1)
+//					NSLog(@"ZOMG, combo is less than one!");
+			}
 		}
+		
+		// Average the position points, then create a particle effect there
+//		averagePosition = ccpMult(averagePosition, 1.0 /[blocks count]);
+		averagePosition = ccp(averagePosition.x / [blocks count], averagePosition.y / [blocks count]);
+		[self createParticlesAt:averagePosition];
 	}
     
 	// Finally, clear out the removeSet array
@@ -1257,13 +1270,10 @@
 	
 	for (int i = gridOffset; i <= visibleCols; i++)
 	{
-		//NSLog(@"Checking column %i", i);
 		for (int j = i + cols; j < (cols - gridOffset) * rows; j += rows)
 		{
-			//NSLog(@"Checking block %i: %@", j, [grid objectAtIndex:j]);
 			if ([grid objectAtIndex:j] == [NSNull null])
 			{
-				//NSLog(@"Empty space at %i", j);
 				[open addObject:[NSNumber numberWithInt:j]];
 			}
 			else if ([open count] > 0)
@@ -1499,7 +1509,7 @@
 	// Speed at which counter counts down is dependent on how large the counter is
 	float interval = 2.0 / combo;
 	
-	NSLog(@"Combo countdown interval is %f", interval);
+	//NSLog(@"Combo countdown interval is %f", interval);
 	
 	// Schedule a method which counts down
 	[self schedule:@selector(updateCombo) interval:interval];

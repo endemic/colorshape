@@ -132,7 +132,7 @@
 				float randomTime = (float)(arc4random() % 40) / 100 + 0.25;
 				
 				id move = [CCMoveTo actionWithDuration:randomTime position:ccp(x * blockSize - blockSize / 2, y * blockSize + blockSize / 2)];
-				id ease = [CCEaseIn actionWithAction:move rate:2];
+				id ease = [CCEaseIn actionWithAction:move rate:4];
 				id sfx = [CCCallBlock actionWithBlock:^{
 					[[SimpleAudioEngine sharedEngine] playEffect:@"block-fall.caf"];
 				}];

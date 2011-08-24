@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  colorshape
+
+  Created by Nathan Demick on 8/24/11.
+  Copyright 2011 Ganbaru Games. All rights reserved.
+*/
+"CFBundleDisplayName" = "color + shape"
+"CFBundleName" = "color + shape"

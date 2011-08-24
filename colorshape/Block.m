@@ -8,6 +8,7 @@
 
 #import "Block.h"
 #import "GameSingleton.h"
+#import "GameConfig.h"
 
 @implementation Block
 
@@ -106,9 +107,9 @@
 	int x = (self.gridPosition.x * self.contentSize.width) - (self.contentSize.width / 2) + gridOffset.x;
 	int y = (self.gridPosition.y * self.contentSize.height) - (self.contentSize.height / 2) + gridOffset.y;
 	
-	id action = [CCMoveTo actionWithDuration:0.2 position:ccp(x, y)];
+	id action = [CCMoveTo actionWithDuration:kAnimationDuration position:ccp(x, y)];
 	//	id ease = [CCEaseBackOut actionWithAction:action];		// This was my original easing action
-	id ease = [CCEaseIn actionWithAction:action rate:2];
+	id ease = [CCEaseIn actionWithAction:action rate:4];
 	[self runAction:ease];
 }
 
