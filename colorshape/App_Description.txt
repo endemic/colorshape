@@ -1,0 +1,34 @@
+color + shape is a matching game that requires quick thinking and fast reflexes. 
+Move the puzzle blocks around the grid with your finger, and try to line up four or more blocks that have the same color or same shape. 
+Chain multiple matches to increase your score multiplier and recharge your "move" meter! 
+Compare high scores with your friends using Game Center. 
+
+How To Play 
+---------------- 
+Touch anywhere on the puzzle grid and drag your finger to move blocks. 
+If you move a block off one side of the grid, it will reappear on the other side. 
+Match four or more blocks of the same color or same shape to make them disappear. 
+Sequential matches will boost your "chain" counter, giving you more points per match. 
+Each time you move a block, your "move" meter will decrease. 
+Keep it charged by making matches.
+When it's empty, that means game over!
+
+
+色+形状は迅速な思考と速い反射神経を必要とするゲームをマッチングです。
+あなたの指を持つグリッドの周りパズルブロックを移動し、同じ色または同じ形状を持つ4つ以-
+上のブロックを整列してみてください。
+あなたのスコアの乗数を高め、あなたの"動き"メーターを充電するためにチェーン複数の一致!
+ゲームセンターを使用してお友達とハイスコアを比較する。 
+
+遊び方
+---------------- 
+パズルのグリッド上のどこにタッチし、ブロックを移動するために指をドラッグします。
+もしグリッドの一方の側からブロックを移動する場合、それは反対側に再表示されますので、あなたの利点にこれを使用してください。
+同じ色またはそれらが消えるように同じ形状の4つ以上のブロックと一致している。
+シーケンシャルマッチを使用すると、試合ごとのより多くのポイントを与え、あなたの"チェーン"カウンターを後押しする。
+あなたがブロックを移動するたびに、あなたの"動き"メーターが減少します。
+それが空の場合、それはゲームオーバーを意味します!それは速いマッチを行うことによって帯電してください。
+
+EN keywords: block, connect, match, four, 4, bejeweled, puzzle, bobble, bust-a-move, shariki, bubble, chain, combo, link, pop,
+
+JA keywords: ブロック、合せる、合す、接続、四、4、ビジュエルド、パズル、ボブル、泡、チェーン、コンボ、リンク、ポップ

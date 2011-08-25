@@ -146,7 +146,6 @@
 		7D0E574B13F228D5006E2791 /* match.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7D0E56A613F228D5006E2791 /* match.wav */; };
 		7D0E574C13F228D5006E2791 /* match2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7D0E56A713F228D5006E2791 /* match2.wav */; };
 		7D0E574D13F228D5006E2791 /* move.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7D0E56A813F228D5006E2791 /* move.wav */; };
-		7D0E574E13F228D5006E2791 /* todo.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7D0E56A913F228D5006E2791 /* todo.rtf */; };
 		7D0E575613F22FFE006E2791 /* game-over-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D0E575813F22FFE006E2791 /* game-over-hd.png */; };
 		7D0E575A13F23009006E2791 /* game-over.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D0E575C13F23009006E2791 /* game-over.png */; };
 		7D0E575E13F23022006E2791 /* title-logo-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D0E576013F23022006E2791 /* title-logo-hd.png */; };
@@ -341,6 +340,8 @@
 		7D0492C313F756D600053098 /* chalkduster-16-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chalkduster-16-hd.png"; sourceTree = "<group>"; };
 		7D0492C413F756D600053098 /* chalkduster-32-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "chalkduster-32-hd.fnt"; sourceTree = "<group>"; };
 		7D0492C513F756D600053098 /* chalkduster-32-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chalkduster-32-hd.png"; sourceTree = "<group>"; };
+		7D0C61F61406BB8F009DC0C8 /* App_Description.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = App_Description.txt; sourceTree = "<group>"; };
+		7D0C61F71406BF8D009DC0C8 /* ToDo.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = ToDo.txt; sourceTree = "<group>"; };
 		7D0E55F813F228D5006E2791 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait~ipad.png"; path = "Resources/Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		7D0E55FA13F228D5006E2791 /* chalkduster-16.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "chalkduster-16.fnt"; sourceTree = "<group>"; };
 		7D0E55FB13F228D5006E2791 /* chalkduster-16.hiero */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "chalkduster-16.hiero"; sourceTree = "<group>"; };
@@ -474,7 +475,6 @@
 		7D0E56A613F228D5006E2791 /* match.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = match.wav; sourceTree = "<group>"; };
 		7D0E56A713F228D5006E2791 /* match2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = match2.wav; sourceTree = "<group>"; };
 		7D0E56A813F228D5006E2791 /* move.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = move.wav; sourceTree = "<group>"; };
-		7D0E56A913F228D5006E2791 /* todo.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = todo.rtf; path = Resources/todo.rtf; sourceTree = "<group>"; };
 		7D0E575713F22FFE006E2791 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/game-over-hd.png"; sourceTree = "<group>"; };
 		7D0E575913F23004006E2791 /* ja */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ja; path = "ja.lproj/game-over-hd.png"; sourceTree = "<group>"; };
 		7D0E575B13F23009006E2791 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/game-over.png"; sourceTree = "<group>"; };
@@ -1171,7 +1171,6 @@
 		7D5DA08513F0902500505474 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7D0E56A913F228D5006E2791 /* todo.rtf */,
 				7D2A39ED13F23E8D0050C64D /* Info.plist */,
 				7D5518D0140587E600382621 /* InfoPlist.strings */,
 				7D0E55F913F228D5006E2791 /* fonts */,
@@ -1190,6 +1189,8 @@
 				7D5DA09213F0902500505474 /* Icon.png */,
 				7D5DA09413F0902500505474 /* Icon@2x.png */,
 				7D5DA09713F0902500505474 /* iTunesArtwork */,
+				7D0C61F61406BB8F009DC0C8 /* App_Description.txt */,
+				7D0C61F71406BF8D009DC0C8 /* ToDo.txt */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1745,7 +1746,6 @@
 				7D0E574B13F228D5006E2791 /* match.wav in Resources */,
 				7D0E574C13F228D5006E2791 /* match2.wav in Resources */,
 				7D0E574D13F228D5006E2791 /* move.wav in Resources */,
-				7D0E574E13F228D5006E2791 /* todo.rtf in Resources */,
 				7D0492AC13F7516900053098 /* info-headline-hd.png in Resources */,
 				7D0492B213F751E600053098 /* high-scores-headline-hd.png in Resources */,
 				7D0492BA13F753C100053098 /* high-scores-headline.png in Resources */,
@@ -2481,7 +2481,7 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -2496,7 +2496,7 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 			};

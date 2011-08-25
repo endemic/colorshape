@@ -1,0 +1,33 @@
+
+Things to do
+============
+
+* Balance gameplay
+* Chain counter runs down too quickly or else regular matches don't give enough time back
+* Make sure level progression is working correctly
+* Test on iPad, iPod Touch, and iPhone
+* Test Game Center submission!
+* Fix initial block generation so there are no matches starting off
+* Add a confirmation to the score reset
+* Add "disabled" leaderboard button
+* Add "game over" music
+
+iTunes Connect
+* Finish writing app description + keywords
+	* English [DONE]
+	* Japanese
+* Take screenshots for app listings
+	* English
+	* Japanese
+
+BUGS
+---------
+* Figure out how to re-enable "Leaderboards" button when player becomes authenticated outside of app
+
+
+Improvements for next update
+============================
+
+* Try to have a "disappear" animation for each block
+* When row or column is touched, the blocks grow by 10% or something to help show which row/column is moving
+* Add status message at center point of match, telling what sort of match was made
