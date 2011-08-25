@@ -429,19 +429,23 @@
  */
 - (void)gameOver
 {
+	// Prevent any block movement
 	[self setIsTouchEnabled:NO];
 	
-	// Unschedule this update method
+	// Unschedule the update method
 	[self unscheduleUpdate];
 	
-	// ask director the the window size
-	CGSize windowSize = [[CCDirector sharedDirector] winSize];
+	// Unschedule the block match-checking method
+	[self unschedule:@selector(matchCheck:)];
 	
 	// Visual effeckuts
 	[self flash];
 	
 	// Stop playing muzak
 	[[SimpleAudioEngine sharedEngine] stopBackgroundMusic];
+
+	// ask director the the window size
+	CGSize windowSize = [[CCDirector sharedDirector] winSize];
 	
 	// Game over, man!
 	CCSprite *gameOverText = [CCSprite spriteWithFile:[NSString stringWithFormat:@"game-over%@.png", hdSuffix]];
@@ -475,7 +479,6 @@
 	if ([GameSingleton sharedGameSingleton].gameMode == kGameModeNormal)
 	{
 		[[GameSingleton sharedGameSingleton] reportScore:score forCategory:@"com.ganbarugames.colorshape.normal"];
-		NSLog(@"Trying to send a score to Game Center!");
 	}
 	
 	// Get scores array stored in user defaults
@@ -521,10 +524,10 @@
 	touchRow = (touchPoint.y - touchOffset.y) / blockSize + gridOffset;
 	touchCol = (touchPoint.x - touchOffset.x) / blockSize + gridOffset;
 	
-	// This prevents a crash due to a player touching above the grid area
-	if (touchRow > 9)
+	// Prevent "out of bounds" touches
+	if (touchRow > rows - 1 || touchCol > cols - 1)
 	{
-		touchRow = 9;
+		horizontalMove = verticalMove = NO;
 	}
 }
 
@@ -593,6 +596,12 @@
 		
 		// Reset the starting touch
 		touchStart = touchPoint;
+	}
+	
+	// Prevent "out of bounds" touches
+	if (touchRow > rows - 1 || touchCol > cols - 1)
+	{
+		horizontalMove = verticalMove = NO;
 	}
 	
 	if (horizontalMove)
@@ -847,7 +856,7 @@
 	}
 	
 	// Schedule the matchCheck method to be run after everything finishes animating
-	[self schedule:@selector(matchCheck) interval:kAnimationDuration];
+	[self schedule:@selector(matchCheck:) interval:kAnimationDuration];
 }
 
 - (void)shiftLeft
@@ -1006,7 +1015,7 @@
 	}
 }
 
-- (void)matchCheck
+- (void)matchCheck:(ccTime)dt
 {
 	// Go thru and check for matching colors/shapes - first horizontally, then vertically
 	// Only go through indices 1 - 8
@@ -1195,7 +1204,7 @@
 	// If no matches, unschedule the check
 	else
 	{
-		[self unschedule:@selector(matchCheck)];
+		[self unschedule:@selector(matchCheck:)];
 		
 		// Re-enable player input
 		[self setIsTouchEnabled:YES];
@@ -1203,7 +1212,7 @@
 		// If there was a high combo count, display to player
 		if (combo > 0)
 		{
-			// "count down" the combo counter after a short delay
+			// "count down" the chain counter after a short delay
 			[self runAction:[CCSequence actions:
 							 [CCDelayTime actionWithDuration:kChainCountdownDelay],
 							 [CCCallFunc actionWithTarget:self selector:@selector(comboCountdown)],
@@ -1215,25 +1224,29 @@
 	for (int i = 0, j = [removeArray count]; i < j; i++)
 	{
 		// Each object in removeArray is another array that contains block indices
-		NSArray *blocks = [removeArray objectAtIndex:i];
+		NSArray *match = [removeArray objectAtIndex:i];
+		
+		// Try to determine the "center point" of each match
 		CGPoint averagePosition = ccp(0, 0);
 		
-		for (int k = 0, l = [blocks count]; k < l; k++)
+		for (int k = 0, l = [match count]; k < l; k++)
 		{
-			// Each object in each "blocks" array is a grid index
-			int gridIndex = [[blocks objectAtIndex:k] intValue];
-			Block *remove = [grid objectAtIndex:gridIndex];
+			// Each object in each "match" array is a grid index
+			int gridIndex = [[match objectAtIndex:k] intValue];
+			Block *b = [grid objectAtIndex:gridIndex];
 			
-			if (remove)
+			if (b)
 			{
 				// Figure out the average "position" of the blocks in order to show a status message/effect
-				averagePosition = ccpAdd(averagePosition, remove.position);
-//				averagePosition = ccp(averagePosition.x + remove.position.x, averagePosition.y + remove.position.y);
+				averagePosition = ccpAdd(averagePosition, b.position);
 				
-				[self removeChild:remove cleanup:YES];
+				// Remove the matched block
+				[self removeChild:b cleanup:YES];
+				
+				// Replace it with a "null" object
 				[grid replaceObjectAtIndex:gridIndex withObject:[NSNull null]];
 				
-				// Drop more blocks in to replace the ones that were removed
+				// Call the method which replaces each "null" object in the game grid with a new block
 				[self dropBlocks];
 				
 				// Update score, using the current combo count as a multiplier
@@ -1241,15 +1254,13 @@
 				
 				// Update time limit
 				[self updateTime];
-				
-//				if (combo < 1)
-//					NSLog(@"ZOMG, combo is less than one!");
 			}
-		}
+		}	// End of each block in match loop
 		
 		// Average the position points, then create a particle effect there
-//		averagePosition = ccpMult(averagePosition, 1.0 /[blocks count]);
-		averagePosition = ccp(averagePosition.x / [blocks count], averagePosition.y / [blocks count]);
+		averagePosition = ccpMult(averagePosition, 1.0 / [match count]);
+		
+		// Create particles at that position
 		[self createParticlesAt:averagePosition];
 	}
     

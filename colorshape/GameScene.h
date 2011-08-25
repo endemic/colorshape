@@ -55,7 +55,7 @@
 - (void)shiftDown;
 
 - (void)resetBuffer;
-- (void)matchCheck;
+- (void)matchCheck:(ccTime)dt;
 
 - (void)dropBlocks;
 - (void)newBlockAtIndex:(int)index;

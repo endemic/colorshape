@@ -100,12 +100,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GameSingleton);
 	}
 }
 
-- (void) reportScore:(int64_t)score forCategory:(NSString *)category
+- (void)reportScore:(int64_t)score forCategory:(NSString *)category
 {
 	if (hasGameCenter)
 	{
 		GKScore *scoreReporter = [[[GKScore alloc] initWithCategory:category] autorelease];
 		scoreReporter.value = score;
+		
+		//NSLog(@"Trying to send score %lld for category %@", score, category);
 		
 		[scoreReporter reportScoreWithCompletionHandler:^(NSError *error) {
 			if (error != nil)
@@ -129,7 +131,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GameSingleton);
 			// Leaderboard config
 			leaderboardController.leaderboardDelegate = self;	// The leaderboard view controller will send messages to this object
 			leaderboardController.category = category;	// Set category here
-			leaderboardController.timeScope = GKLeaderboardTimeScopeAllTime;	// GKLeaderboardTimeScopeToday, GKLeaderboardTimeScopeWeek, GKLeaderboardTimeScopeAllTime
+			leaderboardController.timeScope = GKLeaderboardTimeScopeToday;	// GKLeaderboardTimeScopeToday, GKLeaderboardTimeScopeWeek, GKLeaderboardTimeScopeAllTime
 			
 			// Create an additional UIViewController to attach the GKLeaderboardViewController to
 			myViewController = [[UIViewController alloc] init];

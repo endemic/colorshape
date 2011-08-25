@@ -108,8 +108,8 @@
 	int y = (self.gridPosition.y * self.contentSize.height) - (self.contentSize.height / 2) + gridOffset.y;
 	
 	id action = [CCMoveTo actionWithDuration:kAnimationDuration position:ccp(x, y)];
-	//	id ease = [CCEaseBackOut actionWithAction:action];		// This was my original easing action
-	id ease = [CCEaseIn actionWithAction:action rate:4];
+	id ease = [CCEaseBackOut actionWithAction:action];		// original easing action
+//	id ease = [CCEaseIn actionWithAction:action rate:4];
 	[self runAction:ease];
 }
 

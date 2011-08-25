@@ -1171,13 +1171,13 @@
 		7D5DA08513F0902500505474 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7D0E56A913F228D5006E2791 /* todo.rtf */,
 				7D2A39ED13F23E8D0050C64D /* Info.plist */,
 				7D5518D0140587E600382621 /* InfoPlist.strings */,
 				7D0E55F913F228D5006E2791 /* fonts */,
 				7D0E560613F228D5006E2791 /* images */,
 				7D0E569513F228D5006E2791 /* music */,
 				7D0E569913F228D5006E2791 /* sfx */,
-				7D0E56A913F228D5006E2791 /* todo.rtf */,
 				7D5DA1F213F0DB8600505474 /* Default-hd.png */,
 				7D0E55F813F228D5006E2791 /* Default-Portrait~ipad.png */,
 				7D5DA1F313F0DB8600505474 /* Default-Portrait.png */,
