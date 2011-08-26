@@ -8,26 +8,25 @@ How To Play
 Touch anywhere on the puzzle grid and drag your finger to move blocks. 
 If you move a block off one side of the grid, it will reappear on the other side. 
 Match four or more blocks of the same color or same shape to make them disappear. 
-Sequential matches will boost your "chain" counter, giving you more points per match. 
-Each time you move a block, your "move" meter will decrease. 
+Multiple matches will boost the "chain" counter, giving you more points per match. 
+Each time you move a block, the "move" meter will decrease. 
 Keep it charged by making matches.
 When it's empty, that means game over!
 
-
-色+形状は迅速な思考と速い反射神経を必要とするゲームをマッチングです。
-あなたの指を持つグリッドの周りパズルブロックを移動し、同じ色または同じ形状を持つ4つ以-
-上のブロックを整列してみてください。
-あなたのスコアの乗数を高め、あなたの"動き"メーターを充電するためにチェーン複数の一致!
-ゲームセンターを使用してお友達とハイスコアを比較する。 
+いろ＋かたちは迅速な思考と速い反射神経が必要なパズルゲームです。
+指で、グリッド内のブロックを移動して、
+同じ色か同じ形状の4つのブロックに一致するようにしてみてください。
+あなたの"チェーン"カウンタを増加させ、"移動"メーターを充電するために複数の一致を行う。
+ゲームセンターを使用して友達とハイスコアを比べる。
 
 遊び方
 ---------------- 
-パズルのグリッド上のどこにタッチし、ブロックを移動するために指をドラッグします。
-もしグリッドの一方の側からブロックを移動する場合、それは反対側に再表示されますので、あなたの利点にこれを使用してください。
-同じ色またはそれらが消えるように同じ形状の4つ以上のブロックと一致している。
-シーケンシャルマッチを使用すると、試合ごとのより多くのポイントを与え、あなたの"チェーン"カウンターを後押しする。
-あなたがブロックを移動するたびに、あなたの"動き"メーターが減少します。
-それが空の場合、それはゲームオーバーを意味します!それは速いマッチを行うことによって帯電してください。
+パズルのグリッド上でブロックを移動するために指をドラッグします。
+もしグリッドの一方の側からブロックを移動する場合、それは反対側に再表示されます。
+ブロックを消すのために同じ色か同じ形状の4つのブロックに一致するようにしてみます。
+複数の一致を使用すると、試合ごとのより多くのポイントを与え、"チェーン"カウンターを後押しする。
+ブロックを移動するたびに、"移動"メーターが減少します。
+"動き"メーターが空の場合、ゲームオーバーです！
 
 EN keywords: block, connect, match, four, 4, bejeweled, puzzle, bobble, bust-a-move, shariki, bubble, chain, combo, link, pop,
 

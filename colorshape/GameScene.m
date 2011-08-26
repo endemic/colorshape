@@ -94,7 +94,7 @@
 		comboLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%ix", combo] dimensions:CGSizeMake(97 * fontMultiplier, 58 * fontMultiplier) alignment:CCTextAlignmentRight fontName:@"Chalkduster.ttf" fontSize:36 * fontMultiplier];
 		comboLabel.position = ccp(133, 38);
 		if ([GameSingleton sharedGameSingleton].isPad)
-			comboLabel.position = ccp(260, 76);
+			comboLabel.position = ccp(260, 62);
 		comboLabel.color = ccc3(0, 0, 0);
 		[topUi addChild:comboLabel z:4];
 		
@@ -102,7 +102,7 @@
 		levelLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%02d", level] dimensions:CGSizeMake(97 * fontMultiplier, 58 * fontMultiplier) alignment:CCTextAlignmentCenter fontName:@"Chalkduster.ttf" fontSize:36 * fontMultiplier];
 		levelLabel.position = ccp(258, 38);
 		if ([GameSingleton sharedGameSingleton].isPad)
-			levelLabel.position = ccp(516, 76);
+			levelLabel.position = ccp(516, 62);
 		levelLabel.color = ccc3(0, 0, 0);
 		[topUi addChild:levelLabel z:4];
 		
@@ -110,7 +110,7 @@
 		scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%08d", score] dimensions:CGSizeMake(210 * fontMultiplier, 57 * fontMultiplier) alignment:CCTextAlignmentRight fontName:@"Chalkduster.ttf" fontSize:32 * fontMultiplier];
 		scoreLabel.position = ccp(183, 108);
 		if ([GameSingleton sharedGameSingleton].isPad)
-			scoreLabel.position = ccp(365, 216);
+			scoreLabel.position = ccp(365, 202);
 		[scoreLabel setColor:ccc3(0, 0, 0)];
 		[topUi addChild:scoreLabel z:4];
 		
@@ -120,7 +120,7 @@
 		timeRemainingDisplay.percentage = 100.0;
 		timeRemainingDisplay.position = ccp(48, 80);
 		if ([GameSingleton sharedGameSingleton].isPad)
-			timeRemainingDisplay.position = ccp(95, 158);
+			timeRemainingDisplay.position = ccp(95, 144);	// original was 158
 		[topUi addChild:timeRemainingDisplay z:4];
 		
 		rows = 10;
@@ -163,7 +163,7 @@
 				}
 				
 				// Check against below
-				if (i > cols)
+				if (i >= cols)
 				{
 					Block *d = [grid objectAtIndex:i - cols];
 					//NSLog(@"Comparing index %i vs. %i", i, i - cols);
@@ -171,7 +171,7 @@
 					{
 						valid = NO;
 					}
-					else
+					else if (valid == YES)		// Don't make valid if it was negative before this conditional
 					{
 						valid = YES;
 					}
@@ -1504,7 +1504,8 @@
 	score += points;
 	[scoreLabel setString:[NSString stringWithFormat:@"%08d", score]];
 	
-	if (floor(score / 1500) >= level)
+	// Increment level counter every 10k points
+	if (floor(score / 10000) >= level)
 	{
 		level++;
 		[levelLabel setString:[NSString stringWithFormat:@"%02d", level]];

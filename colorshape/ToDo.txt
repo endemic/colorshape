@@ -3,13 +3,16 @@ Things to do
 ============
 
 * Balance gameplay
-* Chain counter runs down too quickly or else regular matches don't give enough time back
-* Make sure level progression is working correctly
+	* Chain counter runs down too quickly or else regular matches don't give enough time back
+	* Make sure level progression is working correctly
 * Test on iPad, iPod Touch, and iPhone
-* Test Game Center submission!
-* Fix initial block generation so there are no matches starting off
+
+* Scrolling background is broken on actual iPad
+* Status UI labels are "off" on iPod
+
+
 * Add a confirmation to the score reset
-* Add "disabled" leaderboard button
+* Add 2x "disabled" leaderboard button
 * Add "game over" music
 
 iTunes Connect

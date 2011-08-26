@@ -456,7 +456,7 @@
 		if ([GameSingleton sharedGameSingleton].isPad)
 		{
 			if (b.position.x >= windowSize.width + b.contentSize.width * 1.5 + b.contentSize.width * 0.6)
-				b.position = ccp(-b.contentSize.width * 1.5 + b.contentSize.width * 0.2, b.position.y);
+				b.position = ccp(-b.contentSize.width * 1.5 + b.contentSize.width * 0.6, b.position.y);
 		}
 		else
 		{
