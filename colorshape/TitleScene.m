@@ -63,7 +63,7 @@
 			cols = 12;
 		}
 		
-		CCSprite *bg = [CCSprite spriteWithFile:[NSString stringWithFormat:@"Default%@.png", hdSuffix]];
+		bg = [CCSprite spriteWithFile:[NSString stringWithFormat:@"Default%@.png", hdSuffix]];
 		[bg setPosition:ccp(windowSize.width / 2, windowSize.height / 2)];
 		[self addChild:bg];
 		
@@ -261,10 +261,16 @@
 			[titleNode runAction:[CCEaseBackInOut actionWithAction:[CCMoveTo actionWithDuration:1.0 position:ccp(0, 0)]]];
 		}];
 		
-		// Create button that resets local high scores
-		CCMenuItemImage *resetButton = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"reset-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"reset-button-selected%@.png", hdSuffix] block:^(id sender) {
-			// TODO: pop up modal which confirms data reset
-			
+		/* Create a faux "modal" popup - a transparent sprite as a background */
+		
+		// Add text to modal
+		confirmationText = [CCSprite spriteWithFile:[NSString stringWithFormat:@"confirm-reset%@.png", hdSuffix]];
+		confirmationText.position = ccp(windowSize.width / 2, windowSize.height / 2);
+		confirmationText.opacity = 0;
+		[infoNode addChild:confirmationText];
+		
+		// Add buttons to modal
+		modalConfirm = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"yes-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"yes-button-selected%@.png", hdSuffix] block:^(id sender) {
 			// Re-write the scores labels to ZERO
 			for (int i = 0, j = [highScoresLabels count]; i < j; i++)
 			{
@@ -286,9 +292,49 @@
 			[defaults setObject:[NSNumber numberWithBool:YES] forKey:@"showInstructions"];
 			
 			[defaults synchronize];
+			
+			// Dismiss modal popup
+			[modalConfirm runAction:[CCFadeOut actionWithDuration:0.2]];
+			[modalCancel runAction:[CCFadeOut actionWithDuration:0.2]];
+			[confirmationText runAction:[CCFadeOut actionWithDuration:0.2]];
+			
+			// Fade the "reset" button back in
+			[resetButton runAction:[CCFadeIn actionWithDuration:0.3]];
+		}];
+		modalConfirm.opacity = 0;
+		
+		// Button to dismiss "modal" popup and fade the reset button back into place
+		modalCancel = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"no-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"no-button-selected%@.png", hdSuffix] block:^(id sender) {
+			[modalConfirm runAction:[CCFadeOut actionWithDuration:0.2]];
+			[modalCancel runAction:[CCFadeOut actionWithDuration:0.2]];
+			[confirmationText runAction:[CCFadeOut actionWithDuration:0.2]];
+			
+			[resetButton runAction:[CCFadeIn actionWithDuration:0.3]];
+		}];
+		modalCancel.opacity = 0;
+		
+		// Create the menu that contains the yes/no modal buttons
+		CCMenu *modalMenu = [CCMenu menuWithItems:modalConfirm, modalCancel, nil];
+		[modalMenu alignItemsHorizontally];
+		modalMenu.position = ccp(windowSize.width / 2, confirmationText.contentSize.height - modalMenu.contentSize.height / 2);
+		[infoNode addChild:modalMenu];
+		
+		// Create button that resets local high scores
+		resetButton = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"reset-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"reset-button-selected%@.png", hdSuffix] block:^(id sender) {
+			// Pop up modal which confirms data reset
+			id move = [CCMoveTo actionWithDuration:0.4 position:ccp(windowSize.width / 2, windowSize.height / 2)];
+			id ease = [CCEaseBackOut actionWithAction:move];
+			id fadeIn = [CCFadeIn actionWithDuration:0.3];
+			
+			[modalConfirm runAction:[CCSpawn actions:ease, fadeIn, nil]];
+			[modalCancel runAction:[CCSpawn actions:ease, fadeIn, nil]];
+			[confirmationText runAction:[CCSpawn actions:ease, fadeIn, nil]];
+			
+			// Fade the reset button out
+			[resetButton runAction:[CCFadeOut actionWithDuration:0.2]];
 		}];
 		
-		// Create menu that contains our buttons
+		// Create menu that contains the back & reset buttons
 		CCMenu *menuInfo = [CCMenu menuWithItems:resetButton, backButtonInfo, nil];
 		
 		[menuInfo alignItemsVerticallyWithPadding:120 * fontMultiplier];
@@ -440,7 +486,11 @@
 		[leaderboardsButton setIsEnabled:NO];
 	}
 	
+	// Schedule the method which scrolls the background from left to right
 	[self scheduleUpdate];
+	
+	// Remove the initial "default" background - it's visible through the gaps in the blocks on iPad
+	[self removeNodeFromParent:bg];
 }
 
 - (void)update:(ccTime)dt
@@ -455,8 +505,8 @@
 		// If too far to the right, have them circle around again
 		if ([GameSingleton sharedGameSingleton].isPad)
 		{
-			if (b.position.x >= windowSize.width + b.contentSize.width * 1.5 + b.contentSize.width * 0.6)
-				b.position = ccp(-b.contentSize.width * 1.5 + b.contentSize.width * 0.6, b.position.y);
+			if (b.position.x >= windowSize.width + b.contentSize.width * 1.5 + 32)
+				b.position = ccp(-b.contentSize.width * 1.5, b.position.y);
 		}
 		else
 		{
@@ -481,11 +531,11 @@
 	// ask director the the window size
 	CGSize windowSize = [[CCDirector sharedDirector] winSize];
 	
-	CCSprite *bg = [CCSprite spriteWithFile:[NSString stringWithFormat:@"flash%@.png", hdSuffix]];
-	bg.position = ccp(windowSize.width / 2, windowSize.height / 2);
-	[self addChild:bg z:10];
+	CCSprite *flash = [CCSprite spriteWithFile:[NSString stringWithFormat:@"flash%@.png", hdSuffix]];
+	flash.position = ccp(windowSize.width / 2, windowSize.height / 2);
+	[self addChild:flash z:10];
 	
-	[bg runAction:[CCSequence actions:
+	[flash runAction:[CCSequence actions:
 				   [CCFadeOut actionWithDuration:1.0],
 				   [CCCallFuncN actionWithTarget:self selector:@selector(removeNodeFromParent:)],
 				   nil]];

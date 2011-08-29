@@ -11,7 +11,6 @@
 #import "AppDelegate.h"
 #import "GameConfig.h"
 #import "TitleScene.h"
-#import "GameScene.h"
 #import "RootViewController.h"
 #import "GameSingleton.h"
 #import "SimpleAudioEngine.h"
@@ -97,7 +96,7 @@
 #endif
 	
 	[director setAnimationInterval:1.0/60];
-	//[director setDisplayFPS:YES];
+	[director setDisplayFPS:NO];
 	
 	
 	// make the OpenGLView a child of the view controller
@@ -147,11 +146,11 @@
 	if ([defaults boolForKey:@"showInstructions"] == YES)
 	{
 		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
-		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
-		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
-		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
-		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
-		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"1%@.png", hdSuffix]];
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"2%@.png", hdSuffix]];
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"3%@.png", hdSuffix]];
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"4%@.png", hdSuffix]];
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"5%@.png", hdSuffix]];
+		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"6%@.png", hdSuffix]];
 	}
 	
 	// Preload particle image
@@ -163,6 +162,9 @@
 		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"background-%i%@.png", i, hdSuffix]];
 		[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"grid-background-%i%@.png", i, hdSuffix]];
 	}
+	
+	// Set audio mixer rate to lower level - 22050
+	[CDSoundEngine setMixerSampleRate:CD_SAMPLE_RATE_MID];
 	
 	// Preload some simple audio
 	[[SimpleAudioEngine sharedEngine] preloadEffect:@"button.caf"];
@@ -176,7 +178,7 @@
 	[[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.35];
 	
 	// Run the intro Scene
-	[[CCDirector sharedDirector] runWithScene: [TitleScene scene]];
+	[[CCDirector sharedDirector] runWithScene:[TitleScene scene]];
 }
 
 

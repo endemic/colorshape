@@ -11,6 +11,9 @@
 
 @interface TitleScene : CCLayer 
 {
+	// The "default" image
+	CCSprite *bg;
+	
 	// Variables for the grid of colored blocks used as a background for this scene
 	NSMutableArray *grid;
 	int rows, cols, lastRow;
@@ -22,6 +25,13 @@
 	
 	// Button that shows Game Center leaderboards; disabled if no Game Center auth
 	CCMenuItemImage *leaderboardsButton;
+	
+	// Button that resets local high scores
+	CCMenuItemImage *resetButton;
+	
+	// Score reset confirmation dialog
+	CCSprite *confirmationText;
+	CCMenuItemImage *modalConfirm, *modalCancel;
 	
 	// String to be appended to sprite filenames if required to use a high-rez file (e.g. iPhone 4 assests on iPad)
 	NSString *hdSuffix;

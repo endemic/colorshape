@@ -64,6 +64,7 @@
 		score = 0;
 		combo = 0;
 		level = 1;
+		matches = 0;
 		timeRemaining = kMaxTimeLimit;
 		timePlayed = 0;
 		
@@ -1198,6 +1199,20 @@
 		combo += [removeArray count];
 		[comboLabel setString:[NSString stringWithFormat:@"%ix", combo]];
 		
+		// Increment the number of matches made
+		matches += [removeArray count];
+		
+		// Increment level counter every 50 matches
+		if (floor(matches / 50) >= level)
+		{
+			level++;
+			[levelLabel setString:[NSString stringWithFormat:@"%02d", level]];
+			
+			// Change game background!
+			[bg setTexture:[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"background-%i%@.png", level % 10, hdSuffix]]];
+			[gridBg setTexture:[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"grid-background-%i%@.png", level % 10, hdSuffix]]];
+		}
+		
 		// Unschedule the method which depletes the combo counter
 		[self unschedule:@selector(updateCombo)];
 	}
@@ -1503,23 +1518,13 @@
 {
 	score += points;
 	[scoreLabel setString:[NSString stringWithFormat:@"%08d", score]];
-	
-	// Increment level counter every 10k points
-	if (floor(score / 10000) >= level)
-	{
-		level++;
-		[levelLabel setString:[NSString stringWithFormat:@"%02d", level]];
-		
-		// Change game background!
-		[bg setTexture:[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"background-%i%@.png", level % 10, hdSuffix]]];
-		[gridBg setTexture:[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"grid-background-%i%@.png", level % 10, hdSuffix]]];
-	}
 }
 
 - (void)comboCountdown
 {	
 	// Speed at which counter counts down is dependent on how large the counter is
-	float interval = 2.0 / combo;
+	// Interval should be based both on the "chain" number and current level
+	float interval = (10.0 / level) / combo;
 	
 	//NSLog(@"Combo countdown interval is %f", interval);
 	

@@ -23,8 +23,10 @@
 	CGPoint touchStart, touchPrevious, touchOffset;
 	BOOL horizontalMove, verticalMove;
 	
-	// Various display bits
-	int score, combo, level;
+	// Variables to store references to player score, the "chain" count, current level, and # of matches
+	int score, combo, level, matches;
+	
+	// Labels to display game data in the UI
 	CCLabelTTF *scoreLabel;
 	CCLabelTTF *comboLabel;
 	CCLabelTTF *levelLabel;

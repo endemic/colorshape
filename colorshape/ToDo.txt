@@ -3,25 +3,23 @@ Things to do
 ============
 
 * Balance gameplay
-	* Chain counter runs down too quickly or else regular matches don't give enough time back
-	* Make sure level progression is working correctly
+	* Change level progression to be based on # of matches, not points (advantage being that fast players can get higher scores
+	  before the level counter increases) [DONE]
+	* Slow down the combo counter decrement slightly [DONE]
+
 * Test on iPad, iPod Touch, and iPhone
-
-* Scrolling background is broken on actual iPad
-* Status UI labels are "off" on iPod
-
-
 * Add a confirmation to the score reset
-* Add 2x "disabled" leaderboard button
 * Add "game over" music
 
 iTunes Connect
 * Finish writing app description + keywords
 	* English [DONE]
-	* Japanese
+	* Japanese [DONE]
 * Take screenshots for app listings
-	* English
-	* Japanese
+	* English - iPhone [DONE]
+	* Japanese - iPhone [DONE]
+	* English - iPad
+	* Japanese - iPad
 
 BUGS
 ---------
