@@ -259,13 +259,22 @@
 			// Ease the default logo node down into view, replacing the scores node
 			[infoNode runAction:[CCEaseBackInOut actionWithAction:[CCMoveTo actionWithDuration:1.0 position:ccp(0, windowSize.height)]]];
 			[titleNode runAction:[CCEaseBackInOut actionWithAction:[CCMoveTo actionWithDuration:1.0 position:ccp(0, 0)]]];
+			
+			// If the player started the "reset data" process, but didn't confirm/cancel, reset the process here
+			if (resetButton.opacity == 0)
+			{
+				[modalMenu runAction:[CCFadeOut actionWithDuration:0.2]];
+				[confirmationText runAction:[CCFadeOut actionWithDuration:0.2]];
+				
+				[resetButton runAction:[CCFadeIn actionWithDuration:0.3]];
+			}
 		}];
 		
-		/* Create a faux "modal" popup - a transparent sprite as a background */
+		/* Create a faux "modal popup" */
 		
 		// Add text to modal
 		confirmationText = [CCSprite spriteWithFile:[NSString stringWithFormat:@"confirm-reset%@.png", hdSuffix]];
-		confirmationText.position = ccp(windowSize.width / 2, windowSize.height / 2);
+		confirmationText.position = ccp(windowSize.width / 2, windowSize.height / 2 - confirmationText.contentSize.height / 2);
 		confirmationText.opacity = 0;
 		[infoNode addChild:confirmationText];
 		
@@ -294,41 +303,34 @@
 			[defaults synchronize];
 			
 			// Dismiss modal popup
-			[modalConfirm runAction:[CCFadeOut actionWithDuration:0.2]];
-			[modalCancel runAction:[CCFadeOut actionWithDuration:0.2]];
+			[modalMenu runAction:[CCFadeOut actionWithDuration:0.2]];
+			
 			[confirmationText runAction:[CCFadeOut actionWithDuration:0.2]];
 			
 			// Fade the "reset" button back in
 			[resetButton runAction:[CCFadeIn actionWithDuration:0.3]];
 		}];
-		modalConfirm.opacity = 0;
 		
 		// Button to dismiss "modal" popup and fade the reset button back into place
 		modalCancel = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"no-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"no-button-selected%@.png", hdSuffix] block:^(id sender) {
-			[modalConfirm runAction:[CCFadeOut actionWithDuration:0.2]];
-			[modalCancel runAction:[CCFadeOut actionWithDuration:0.2]];
+			[modalMenu runAction:[CCFadeOut actionWithDuration:0.2]];
 			[confirmationText runAction:[CCFadeOut actionWithDuration:0.2]];
 			
 			[resetButton runAction:[CCFadeIn actionWithDuration:0.3]];
 		}];
-		modalCancel.opacity = 0;
 		
 		// Create the menu that contains the yes/no modal buttons
-		CCMenu *modalMenu = [CCMenu menuWithItems:modalConfirm, modalCancel, nil];
+		modalMenu = [CCMenu menuWithItems:modalConfirm, modalCancel, nil];
 		[modalMenu alignItemsHorizontally];
-		modalMenu.position = ccp(windowSize.width / 2, confirmationText.contentSize.height - modalMenu.contentSize.height / 2);
+		modalMenu.position = ccp(windowSize.width / 2, confirmationText.position.y - confirmationText.contentSize.height / 1.5);
+		[modalMenu setOpacity:0];
 		[infoNode addChild:modalMenu];
 		
 		// Create button that resets local high scores
 		resetButton = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"reset-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"reset-button-selected%@.png", hdSuffix] block:^(id sender) {
 			// Pop up modal which confirms data reset
-			id move = [CCMoveTo actionWithDuration:0.4 position:ccp(windowSize.width / 2, windowSize.height / 2)];
-			id ease = [CCEaseBackOut actionWithAction:move];
-			id fadeIn = [CCFadeIn actionWithDuration:0.3];
-			
-			[modalConfirm runAction:[CCSpawn actions:ease, fadeIn, nil]];
-			[modalCancel runAction:[CCSpawn actions:ease, fadeIn, nil]];
-			[confirmationText runAction:[CCSpawn actions:ease, fadeIn, nil]];
+			[modalMenu runAction:[CCFadeIn actionWithDuration:0.3]];
+			[confirmationText runAction:[CCFadeIn actionWithDuration:0.3]];
 			
 			// Fade the reset button out
 			[resetButton runAction:[CCFadeOut actionWithDuration:0.2]];
@@ -373,7 +375,7 @@
 	// Add to grid
 	[grid addObject:b];
 	
-	float randomTime = (float)(arc4random() % 40) / 100 + 0.25;
+	float randomTime = (float)(arc4random() % 40) / 100 + 0.15;
 	
 	// A bunch of actions and crap
 	id move = [CCMoveTo actionWithDuration:randomTime position:ccp(x * blockSize - blockSize / 2, y * blockSize + blockSize / 2)];

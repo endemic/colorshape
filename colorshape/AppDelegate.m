@@ -156,6 +156,9 @@
 	// Preload particle image
 	[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"particle%@.png", hdSuffix]];
 	
+	// Preload "flash" image
+	[[CCTextureCache sharedTextureCache] addImage:[NSString stringWithFormat:@"flash%@.png", hdSuffix]];
+	
 	// Preload background images
 	for (int i = 0; i < 10; i++)
 	{
@@ -172,7 +175,7 @@
 	[[SimpleAudioEngine sharedEngine] preloadEffect:@"match2.caf"];
 	
 	// Preload a BGM track
-	[[SimpleAudioEngine sharedEngine] preloadBackgroundMusic:@"1.caf"];
+	[[SimpleAudioEngine sharedEngine] preloadBackgroundMusic:@"1.mp3"];
 	
 	// Turn down the BGM volume a bit
 	[[SimpleAudioEngine sharedEngine] setBackgroundMusicVolume:0.35];

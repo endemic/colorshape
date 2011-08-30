@@ -95,7 +95,7 @@
 		comboLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%ix", combo] dimensions:CGSizeMake(97 * fontMultiplier, 58 * fontMultiplier) alignment:CCTextAlignmentRight fontName:@"Chalkduster.ttf" fontSize:36 * fontMultiplier];
 		comboLabel.position = ccp(133, 38);
 		if ([GameSingleton sharedGameSingleton].isPad)
-			comboLabel.position = ccp(260, 62);
+			comboLabel.position = ccp(260, 76);
 		comboLabel.color = ccc3(0, 0, 0);
 		[topUi addChild:comboLabel z:4];
 		
@@ -103,7 +103,7 @@
 		levelLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%02d", level] dimensions:CGSizeMake(97 * fontMultiplier, 58 * fontMultiplier) alignment:CCTextAlignmentCenter fontName:@"Chalkduster.ttf" fontSize:36 * fontMultiplier];
 		levelLabel.position = ccp(258, 38);
 		if ([GameSingleton sharedGameSingleton].isPad)
-			levelLabel.position = ccp(516, 62);
+			levelLabel.position = ccp(516, 76);
 		levelLabel.color = ccc3(0, 0, 0);
 		[topUi addChild:levelLabel z:4];
 		
@@ -111,7 +111,7 @@
 		scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%08d", score] dimensions:CGSizeMake(210 * fontMultiplier, 57 * fontMultiplier) alignment:CCTextAlignmentRight fontName:@"Chalkduster.ttf" fontSize:32 * fontMultiplier];
 		scoreLabel.position = ccp(183, 108);
 		if ([GameSingleton sharedGameSingleton].isPad)
-			scoreLabel.position = ccp(365, 202);
+			scoreLabel.position = ccp(365, 216);
 		[scoreLabel setColor:ccc3(0, 0, 0)];
 		[topUi addChild:scoreLabel z:4];
 		
@@ -121,7 +121,7 @@
 		timeRemainingDisplay.percentage = 100.0;
 		timeRemainingDisplay.position = ccp(48, 80);
 		if ([GameSingleton sharedGameSingleton].isPad)
-			timeRemainingDisplay.position = ccp(95, 144);	// original was 158
+			timeRemainingDisplay.position = ccp(95, 158);	// original was 158
 		[topUi addChild:timeRemainingDisplay z:4];
 		
 		rows = 10;
@@ -189,7 +189,7 @@
 		
 		// Play random music track
 		int trackNumber = (float)(arc4random() % 100) / 100 * 3 + 1;	// 1 - 3
-		[[SimpleAudioEngine sharedEngine] playBackgroundMusic:[NSString stringWithFormat:@"%i.caf", trackNumber]];
+		[[SimpleAudioEngine sharedEngine] playBackgroundMusic:[NSString stringWithFormat:@"%i.mp3", trackNumber]];
 		
 		// Set the layer to not respond to touch events - will wait until "ready?" "start!" message is displayed
 		[self setIsTouchEnabled:NO];
@@ -444,7 +444,7 @@
 	
 	// Stop playing muzak
 	[[SimpleAudioEngine sharedEngine] stopBackgroundMusic];
-
+	
 	// ask director the the window size
 	CGSize windowSize = [[CCDirector sharedDirector] winSize];
 	

@@ -7,20 +7,6 @@ Things to do
 	  before the level counter increases) [DONE]
 	* Slow down the combo counter decrement slightly [DONE]
 
-* Test on iPad, iPod Touch, and iPhone
-* Add a confirmation to the score reset
-* Add "game over" music
-
-iTunes Connect
-* Finish writing app description + keywords
-	* English [DONE]
-	* Japanese [DONE]
-* Take screenshots for app listings
-	* English - iPhone [DONE]
-	* Japanese - iPhone [DONE]
-	* English - iPad
-	* Japanese - iPad
-
 BUGS
 ---------
 * Figure out how to re-enable "Leaderboards" button when player becomes authenticated outside of app
