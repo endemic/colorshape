@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  colorshape
+
+  Created by Nathan Demick on 10/20/11.
+  Copyright (c) 2011 Ganbaru Games. All rights reserved.
+*/
+"Reset data" = "データをリセットする";
+"Are you sure?" = "よろしいですか？";
+"Cancel" = "キャンセル";
+"OK" = "リセット";
+"Go to App Store?" = "App Storeに行く？";
+"Check my other games!" = "他のゲームをチェック！";
+"Go" = "行く";

@@ -1202,8 +1202,8 @@
 		// Increment the number of matches made
 		matches += [removeArray count];
 		
-		// Increment level counter every 50 matches
-		if (floor(matches / 50) >= level)
+		// Increment level counter every kMatchesPerLevel matches
+		if (floor(matches / kMatchesPerLevel) >= level)
 		{
 			level++;
 			[levelLabel setString:[NSString stringWithFormat:@"%02d", level]];
@@ -1255,14 +1255,22 @@
 				// Figure out the average "position" of the blocks in order to show a status message/effect
 				averagePosition = ccpAdd(averagePosition, b.position);
 				
-				// Remove the matched block
-				[self removeChild:b cleanup:YES];
+				// Animate the matched block out, then remove it
+				id action = [CCScaleTo actionWithDuration:kAnimationDuration scale:0.0];
+				id ease = [CCEaseBackIn actionWithAction:action];
+				id remove = [CCCallBlockN actionWithBlock:^(CCNode *node) {
+					// Remove the matched block
+					[self removeChild:node cleanup:YES];
+				}];
 				
-				// Replace it with a "null" object
+				[b runAction:[CCSequence actions:ease, remove, nil]];
+//				[self removeChild:b cleanup:YES];
+				
+				// Replace it with a "null" object in the grid
 				[grid replaceObjectAtIndex:gridIndex withObject:[NSNull null]];
 				
 				// Call the method which replaces each "null" object in the game grid with a new block
-				[self dropBlocks];
+//				[self dropBlocks];
 				
 				// Update score, using the current combo count as a multiplier
 				[self updateScore:kPointsPerBlock * combo];
@@ -1271,6 +1279,9 @@
 				[self updateTime];
 			}
 		}	// End of each block in match loop
+		
+		// Call the method which replaces each "null" object in the game grid with a new block
+		[self dropBlocks];
 		
 		// Average the position points, then create a particle effect there
 		averagePosition = ccpMult(averagePosition, 1.0 / [match count]);
@@ -1302,6 +1313,7 @@
 			{
 				[open addObject:[NSNumber numberWithInt:j]];
 			}
+			// If there are open spaces below block j...
 			else if ([open count] > 0)
 			{
 				// Move this block into the first open space, then add this space into the open space array
@@ -1325,14 +1337,14 @@
 				[open addObject:[NSNumber numberWithInt:j]];
 			}
 		}
+		
 		// End of a column; go through remaining indices in "open" and add new blocks
 		for (int k = 0; k < [open count]; k++)
 		{
 			int newIndex = [[open objectAtIndex:k] intValue];
-			[open removeObjectAtIndex:k];
 			
-            //			if ([grid objectAtIndex:newIndex] != [NSNull null])
-            //				NSLog(@"Trying to replace non-null object at %i", newIndex);
+//            if ([grid objectAtIndex:newIndex] != [NSNull null])
+//				NSLog(@"Trying to replace non-null object at %i", newIndex);
 			
 			[self newBlockAtIndex:newIndex];
 			
@@ -1340,6 +1352,9 @@
 			b.position = ccp(b.position.x, b.position.y + windowSize.height);
 			[b animateToGridPosition];
 		}
+		
+		// End of a column; don't carry over open spots
+		[open removeAllObjects];
 	}
 }
 

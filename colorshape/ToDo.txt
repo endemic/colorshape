@@ -2,15 +2,12 @@
 Things to do
 ============
 
-* Balance gameplay
-	* Change level progression to be based on # of matches, not points (advantage being that fast players can get higher scores
-	  before the level counter increases) [DONE]
-	* Slow down the combo counter decrement slightly [DONE]
-
-BUGS
----------
-* Figure out how to re-enable "Leaderboards" button when player becomes authenticated outside of app
-
+* Create large "More Games" button on title screen
+* Change "Reset data" button to use NSAlert popup
+* Fix particle positions
+* Look into vertical matches not completely disappearing
+* Change animation for blocks sliding into place [DONE]
+* Fix music playing on title screen [DONE]
 
 Improvements for next update
 ============================

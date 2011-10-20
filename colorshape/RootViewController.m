@@ -96,7 +96,7 @@
 	//
 	// return YES for the supported orientations
 	
-	return ( UIInterfaceOrientationIsLandscape( interfaceOrientation ) );
+	return ( UIInterfaceOrientationIsPortrait( interfaceOrientation ) );
 	
 #else
 #error Unknown value in GAME_AUTOROTATION

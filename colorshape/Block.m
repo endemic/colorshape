@@ -108,8 +108,8 @@
 	int y = (self.gridPosition.y * self.contentSize.height) - (self.contentSize.height / 2) + gridOffset.y;
 	
 	id action = [CCMoveTo actionWithDuration:kAnimationDuration position:ccp(x, y)];
-	id ease = [CCEaseBackOut actionWithAction:action];		// original easing action
-//	id ease = [CCEaseIn actionWithAction:action rate:4];
+//	id ease = [CCEaseBackOut actionWithAction:action];		// original easing action
+	id ease = [CCEaseIn actionWithAction:action rate:4];
 	[self runAction:ease];
 }
 
@@ -131,6 +131,16 @@
 	
 	// Run the action!
 	[self runAction:action];
+}
+
+- (void)shrink
+{
+	// Create action to scale down to ZERO
+	id action = [CCScaleTo actionWithDuration:kAnimationDuration scale:0.0];
+	id ease = [CCEaseBackIn actionWithAction:action];
+	
+	// Run the action!
+	[self runAction:ease];
 }
 
 @end

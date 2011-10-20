@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  colorshape
+
+  Created by Nathan Demick on 10/20/11.
+  Copyright (c) 2011 Ganbaru Games. All rights reserved.
+*/
+"Reset data" = "Reset data";
+"Are you sure?" = "Are you sure?";
+"Cancel" = "Cancel";
+"OK" = "OK";
+"Go to App Store?" = "Go to App Store?";
+"Check my other games!" = "Check my other games!";
+"Go" = "Go";

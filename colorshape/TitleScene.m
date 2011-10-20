@@ -193,7 +193,7 @@
 		int defaultFontSize = 32;
 		
 		// Create an array to hold/reference the high scores labels, so they can be re-written if the user resets scores
-		NSMutableArray *highScoresLabels = [NSMutableArray array];
+		highScoresLabels = [[NSMutableArray array] retain];
 		
 		// Iterate through array and print out high scores
 		for (int i = 0; i < [highScores count]; i++)
@@ -259,81 +259,18 @@
 			// Ease the default logo node down into view, replacing the scores node
 			[infoNode runAction:[CCEaseBackInOut actionWithAction:[CCMoveTo actionWithDuration:1.0 position:ccp(0, windowSize.height)]]];
 			[titleNode runAction:[CCEaseBackInOut actionWithAction:[CCMoveTo actionWithDuration:1.0 position:ccp(0, 0)]]];
-			
-			// If the player started the "reset data" process, but didn't confirm/cancel, reset the process here
-			if (resetButton.opacity == 0)
-			{
-				[modalMenu runAction:[CCFadeOut actionWithDuration:0.2]];
-				[confirmationText runAction:[CCFadeOut actionWithDuration:0.2]];
-				
-				[resetButton runAction:[CCFadeIn actionWithDuration:0.3]];
-			}
 		}];
-		
-		/* Create a faux "modal popup" */
-		
-		// Add text to modal
-		confirmationText = [CCSprite spriteWithFile:[NSString stringWithFormat:@"confirm-reset%@.png", hdSuffix]];
-		confirmationText.position = ccp(windowSize.width / 2, windowSize.height / 2 - confirmationText.contentSize.height / 2);
-		confirmationText.opacity = 0;
-		[infoNode addChild:confirmationText];
-		
-		// Add buttons to modal
-		modalConfirm = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"yes-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"yes-button-selected%@.png", hdSuffix] block:^(id sender) {
-			// Re-write the scores labels to ZERO
-			for (int i = 0, j = [highScoresLabels count]; i < j; i++)
-			{
-				[[highScoresLabels objectAtIndex:i] setString:[NSString stringWithFormat:@"%i.%i\n", i + 1, 0]];
-			}
-			
-			// Get user defaults
-			NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-			
-			// Re-save scores array to user defaults
-			[defaults setObject:[NSArray arrayWithObjects:[NSNumber numberWithInt:0],
-								 [NSNumber numberWithInt:0],
-								 [NSNumber numberWithInt:0],
-								 [NSNumber numberWithInt:0],
-								 [NSNumber numberWithInt:0],
-								 nil] forKey:@"scores"];
-			
-			// Show the gameplay intro "tutorial" again
-			[defaults setObject:[NSNumber numberWithBool:YES] forKey:@"showInstructions"];
-			
-			[defaults synchronize];
-			
-			// Dismiss modal popup
-			[modalMenu runAction:[CCFadeOut actionWithDuration:0.2]];
-			
-			[confirmationText runAction:[CCFadeOut actionWithDuration:0.2]];
-			
-			// Fade the "reset" button back in
-			[resetButton runAction:[CCFadeIn actionWithDuration:0.3]];
-		}];
-		
-		// Button to dismiss "modal" popup and fade the reset button back into place
-		modalCancel = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"no-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"no-button-selected%@.png", hdSuffix] block:^(id sender) {
-			[modalMenu runAction:[CCFadeOut actionWithDuration:0.2]];
-			[confirmationText runAction:[CCFadeOut actionWithDuration:0.2]];
-			
-			[resetButton runAction:[CCFadeIn actionWithDuration:0.3]];
-		}];
-		
-		// Create the menu that contains the yes/no modal buttons
-		modalMenu = [CCMenu menuWithItems:modalConfirm, modalCancel, nil];
-		[modalMenu alignItemsHorizontally];
-		modalMenu.position = ccp(windowSize.width / 2, confirmationText.position.y - confirmationText.contentSize.height / 1.5);
-		[modalMenu setOpacity:0];
-		[infoNode addChild:modalMenu];
 		
 		// Create button that resets local high scores
-		resetButton = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"reset-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"reset-button-selected%@.png", hdSuffix] block:^(id sender) {
-			// Pop up modal which confirms data reset
-			[modalMenu runAction:[CCFadeIn actionWithDuration:0.3]];
-			[confirmationText runAction:[CCFadeIn actionWithDuration:0.3]];
-			
-			// Fade the reset button out
-			[resetButton runAction:[CCFadeOut actionWithDuration:0.2]];
+		CCMenuItemImage *resetButton = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"reset-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"reset-button-selected%@.png", hdSuffix] block:^(id sender) {
+			// Create "are you sure?" alert
+			UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Reset data", @"Alert title")
+																 message:NSLocalizedString(@"Are you sure?", @"Alert description")
+																delegate:self
+													   cancelButtonTitle:NSLocalizedString(@"Cancel", @"Button")
+													   otherButtonTitles:NSLocalizedString(@"OK", @"Button"), nil] autorelease];
+			[alertView setTag:1];
+			[alertView show];
 		}];
 		
 		// Create menu that contains the back & reset buttons
@@ -449,19 +386,30 @@
 		[titleNode runAction:[CCEaseBackInOut actionWithAction:[CCMoveTo actionWithDuration:1.0 position:ccp(0, windowSize.height)]]];
 	}];
 	
+	CCMenuItemImage *moreGamesButton = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"more-games-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"more-games-button-selected%@.png", hdSuffix] block:^(id sender) {
+		// Create "go to App Store?" alert
+		UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Go to App Store?", @"Alert title")
+															 message:NSLocalizedString(@"Check my other games!", @"Alert subtitle")
+															delegate:self
+												   cancelButtonTitle:NSLocalizedString(@"Cancel", @"Button")
+												   otherButtonTitles:NSLocalizedString(@"Go", @"Button"), nil] autorelease];
+		[alertView setTag:2];
+		[alertView show];
+	}];
+	
+	// Add "start/scores" menu
+	CCMenu *titleMenu = [CCMenu menuWithItems:startButton, scoresButton, moreGamesButton, nil];
+	[titleMenu alignItemsVerticallyWithPadding:5 * fontMultiplier];
+	[titleMenu setPosition:ccp(windowSize.width / 2, startButton.contentSize.height * 2)];
+	[titleNode addChild:titleMenu z:3];
+	
 	CCMenuItemImage *infoButton = [CCMenuItemImage itemFromNormalImage:[NSString stringWithFormat:@"info-button%@.png", hdSuffix] selectedImage:[NSString stringWithFormat:@"info-button-selected%@.png", hdSuffix] block:^(id sender) {
 		[[SimpleAudioEngine sharedEngine] playEffect:@"button.caf"];
-
+		
 		// Ease the info node down into view, replacing the default logo, etc.
 		[infoNode runAction:[CCEaseBackInOut actionWithAction:[CCMoveTo actionWithDuration:1.0 position:ccp(0, 0)]]];
 		[titleNode runAction:[CCEaseBackInOut actionWithAction:[CCMoveTo actionWithDuration:1.0 position:ccp(0, -windowSize.height)]]];
 	}];
-	
-	// Add "start/scores" menu
-	CCMenu *titleMenu = [CCMenu menuWithItems:startButton, scoresButton, nil];
-	[titleMenu alignItemsVerticallyWithPadding:5 * fontMultiplier];
-	[titleMenu setPosition:ccp(windowSize.width / 2, startButton.contentSize.height / 0.65)];
-	[titleNode addChild:titleMenu z:3];
 	
 	// Add the "info" menu
 	CCMenu *infoMenu = [CCMenu menuWithItems:infoButton, nil];
@@ -476,7 +424,7 @@
 	// Play some music!
 	if (![[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying])
 	{
-		[[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"1.caf"];
+		[[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"1.mp3"];
 	}
 	
 	// Show Game Center authentication
@@ -528,6 +476,72 @@
 	}
 }
 
+/**
+ * Handle clicking of the alert view
+ */
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if (alertView.tag == 1)
+	{
+		switch (buttonIndex) 
+		{
+			case 0:
+				// Do nothing - dismiss
+				break;
+			case 1:
+			{
+				// Re-write the scores labels to ZERO
+				for (int i = 0, j = [highScoresLabels count]; i < j; i++)
+				{
+					[[highScoresLabels objectAtIndex:i] setString:[NSString stringWithFormat:@"%i.%i\n", i + 1, 0]];
+				}
+				
+				// Get user defaults
+				NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+				
+				// Re-save scores array to user defaults
+				[defaults setObject:[NSArray arrayWithObjects:[NSNumber numberWithInt:0],
+									 [NSNumber numberWithInt:0],
+									 [NSNumber numberWithInt:0],
+									 [NSNumber numberWithInt:0],
+									 [NSNumber numberWithInt:0],
+									 nil] forKey:@"scores"];
+				
+				// Show the gameplay intro "tutorial" again
+				[defaults setObject:[NSNumber numberWithBool:YES] forKey:@"showInstructions"];
+				
+				[defaults synchronize];
+			}
+				break;
+			default:
+				break;
+		}
+	}
+	// "More games" alert
+	else if (alertView.tag == 2)
+	{
+		switch (buttonIndex) 
+		{
+			case 0:
+				// Do nothing - dismiss
+				break;
+			case 1:
+#if TARGET_IPHONE_SIMULATOR
+				CCLOG(@"App Store is not supported on the iOS simulator. Unable to open App Store page.");
+#else
+				// they want to see more games
+				[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://itunes.com/apps/ganbarugames"]];
+#endif
+				break;
+			default:
+				break;
+		}
+	}
+}
+
+/**
+ * Show large white .png, then quickly fade it out to get an effect like Flixel's "flash"
+ */
 - (void)flash
 {
 	// ask director the the window size
@@ -556,6 +570,7 @@
 - (void)dealloc
 {
 	[grid release];
+	[highScoresLabels release];
 	
 	[super dealloc];
 }

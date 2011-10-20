@@ -29,5 +29,6 @@
 - (void)animateToGridPosition;
 - (void)flash;
 - (void)embiggen;
+- (void)shrink;
 
 @end

@@ -27,7 +27,7 @@
 // TIP:
 // To improve the performance, you should set this value to "kGameAutorotationNone" or "kGameAutorotationCCDirector"
 #if defined(__ARM_NEON__) || TARGET_IPHONE_SIMULATOR
-#define GAME_AUTOROTATION kGameAutorotationCCDirector
+#define GAME_AUTOROTATION kGameAutorotationUIViewController
 
 // ARMv6 (1st and 2nd generation devices): Don't rotate. It is very expensive
 #elif __arm__
@@ -44,11 +44,12 @@
 #define kGameModeNormal 1
 #define kGameModeTimeAttack 2
 
-#define kAnimationDuration 0.2
+#define kAnimationDuration 0.3
 #define kMaxTimeLimit 10.0
 #define kMinimumMatchCount 4
 #define kChainCountdownDelay 2.0
 #define kPointsPerBlock 10
+#define kMatchesPerLevel 25
 
 #endif // __GAME_CONFIG_H
 

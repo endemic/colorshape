@@ -299,6 +299,11 @@
 		7D5DA1F613F0DB8600505474 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D5DA1F313F0DB8600505474 /* Default-Portrait.png */; };
 		7D5DA1F713F0DB8600505474 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D5DA1F413F0DB8600505474 /* Default@2x.png */; };
 		7D5DA1F913F0DC1400505474 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D5DA1F813F0DC1400505474 /* GameKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		7D8B99EF144ECD1A0029B93D /* more-games-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D8B99F1144ECD1A0029B93D /* more-games-button.png */; };
+		7D8B99F3144ECD1E0029B93D /* more-games-button-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D8B99F5144ECD1E0029B93D /* more-games-button-selected.png */; };
+		7D8B99F6144ECD210029B93D /* more-games-button-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D8B99F8144ECD210029B93D /* more-games-button-hd.png */; };
+		7D8B99F9144ECD240029B93D /* more-games-button-selected-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D8B99FB144ECD240029B93D /* more-games-button-selected-hd.png */; };
+		7D8B9A02145022FC0029B93D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7D8B9A04145022FC0029B93D /* Localizable.strings */; };
 		7DC0679D13FCB95200CCCF0B /* reset-button-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DC0679F13FCB95200CCCF0B /* reset-button-hd.png */; };
 		7DC067A013FCB95500CCCF0B /* reset-button-selected-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DC067A213FCB95500CCCF0B /* reset-button-selected-hd.png */; };
 		7DC067A713FCB9BB00CCCF0B /* credits-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DC067A913FCB9BB00CCCF0B /* credits-hd.png */; };
@@ -795,6 +800,16 @@
 		7D5DA1F313F0DB8600505474 /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait.png"; path = "Resources/Default-Portrait.png"; sourceTree = "<group>"; };
 		7D5DA1F413F0DB8600505474 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
 		7D5DA1F813F0DC1400505474 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		7D8B99F0144ECD1A0029B93D /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/more-games-button.png"; sourceTree = "<group>"; };
+		7D8B99F4144ECD1E0029B93D /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/more-games-button-selected.png"; sourceTree = "<group>"; };
+		7D8B99F7144ECD210029B93D /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/more-games-button-hd.png"; sourceTree = "<group>"; };
+		7D8B99FA144ECD240029B93D /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/more-games-button-selected-hd.png"; sourceTree = "<group>"; };
+		7D8B99FC144ECD290029B93D /* ja */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ja; path = "ja.lproj/more-games-button.png"; sourceTree = "<group>"; };
+		7D8B99FD144ECD2E0029B93D /* ja */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ja; path = "ja.lproj/more-games-button-selected.png"; sourceTree = "<group>"; };
+		7D8B99FE144ECD320029B93D /* ja */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ja; path = "ja.lproj/more-games-button-hd.png"; sourceTree = "<group>"; };
+		7D8B99FF144ECD350029B93D /* ja */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ja; path = "ja.lproj/more-games-button-selected-hd.png"; sourceTree = "<group>"; };
+		7D8B9A03145022FC0029B93D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7D8B9A05145023020029B93D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7DC0679E13FCB95200CCCF0B /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/reset-button-hd.png"; sourceTree = "<group>"; };
 		7DC067A113FCB95500CCCF0B /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/reset-button-selected-hd.png"; sourceTree = "<group>"; };
 		7DC067A313FCB95B00CCCF0B /* ja */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ja; path = "ja.lproj/reset-button-hd.png"; sourceTree = "<group>"; };
@@ -997,6 +1012,10 @@
 		7D0E563013F228D5006E2791 /* buttons */ = {
 			isa = PBXGroup;
 			children = (
+				7D8B99F1144ECD1A0029B93D /* more-games-button.png */,
+				7D8B99F5144ECD1E0029B93D /* more-games-button-selected.png */,
+				7D8B99F8144ECD210029B93D /* more-games-button-hd.png */,
+				7D8B99FB144ECD240029B93D /* more-games-button-selected-hd.png */,
 				7DC8DB2D140C11870095771A /* no-button.png */,
 				7DC8DB30140C118D0095771A /* no-button-hd.png */,
 				7DC8DB33140C11900095771A /* no-button-selected.png */,
@@ -1211,6 +1230,7 @@
 			isa = PBXGroup;
 			children = (
 				7D2A39ED13F23E8D0050C64D /* Info.plist */,
+				7D8B9A04145022FC0029B93D /* Localizable.strings */,
 				7D5518D0140587E600382621 /* InfoPlist.strings */,
 				7D0E55F913F228D5006E2791 /* fonts */,
 				7D0E560613F228D5006E2791 /* images */,
@@ -1590,6 +1610,7 @@
 		7D5DA06713F0902500505474 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = "Ganbaru Games";
 			};
 			buildConfigurationList = 7D5DA06A13F0902500505474 /* Build configuration list for PBXProject "colorshape" */;
@@ -1832,6 +1853,11 @@
 				7DC8DB37140C11980095771A /* yes-button.png in Resources */,
 				7DC8DB52140C1B8C0095771A /* confirm-reset-hd.png in Resources */,
 				7DC8DB4F140C1B8A0095771A /* confirm-reset.png in Resources */,
+				7D8B99F3144ECD1E0029B93D /* more-games-button-selected.png in Resources */,
+				7D8B99EF144ECD1A0029B93D /* more-games-button.png in Resources */,
+				7D8B99F9144ECD240029B93D /* more-games-button-selected-hd.png in Resources */,
+				7D8B99F6144ECD210029B93D /* more-games-button-hd.png in Resources */,
+				7D8B9A02145022FC0029B93D /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2301,6 +2327,52 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		7D8B99F1144ECD1A0029B93D /* more-games-button.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7D8B99F0144ECD1A0029B93D /* en */,
+				7D8B99FC144ECD290029B93D /* ja */,
+			);
+			name = "more-games-button.png";
+			sourceTree = "<group>";
+		};
+		7D8B99F5144ECD1E0029B93D /* more-games-button-selected.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7D8B99F4144ECD1E0029B93D /* en */,
+				7D8B99FD144ECD2E0029B93D /* ja */,
+			);
+			name = "more-games-button-selected.png";
+			sourceTree = "<group>";
+		};
+		7D8B99F8144ECD210029B93D /* more-games-button-hd.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7D8B99F7144ECD210029B93D /* en */,
+				7D8B99FE144ECD320029B93D /* ja */,
+			);
+			name = "more-games-button-hd.png";
+			sourceTree = "<group>";
+		};
+		7D8B99FB144ECD240029B93D /* more-games-button-selected-hd.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7D8B99FA144ECD240029B93D /* en */,
+				7D8B99FF144ECD350029B93D /* ja */,
+			);
+			name = "more-games-button-selected-hd.png";
+			sourceTree = "<group>";
+		};
+		7D8B9A04145022FC0029B93D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7D8B9A03145022FC0029B93D /* en */,
+				7D8B9A05145023020029B93D /* ja */,
+			);
+			name = Localizable.strings;
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		7DC0679F13FCB95200CCCF0B /* reset-button-hd.png */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2667,6 +2739,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = colorshape/Prefix.pch;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = colorshape/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_LDFLAGS = "-lz";
@@ -2685,6 +2758,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = colorshape/Prefix.pch;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = colorshape/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_LDFLAGS = "-lz";
